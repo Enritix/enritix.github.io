@@ -12,18 +12,35 @@
 <body>
     <header>
         <nav>
-            <ul>
+            <ul id="desktop-nav">
                 <li id="logo-container">
                     <a href="">
                         <img src="assets/images/logo.png" alt="Logo" width="100px" height="100px">
                         <p>Enrico</p>
                     </a>
                 </li>
-                <li><a id="current-page" href=""><span>#</span>home</a></li>
+                <li><a class="current-page" href=""><span>#</span>home</a></li>
                 <li><a href=""><span>#</span>projects</a></li>
                 <li><a href=""><span>#</span>about-me</a></li>
                 <li><a href=""><span>#</span>contacts</a></li>
             </ul>
+            <div id="mobile-nav">
+                <a id="mobile-logo" href="">
+                    <img src="assets/images/logo.png" alt="Logo" width="100px" height="100px">
+                    <p>Enrico</p>
+                </a>
+                <div id="mobile-nav-container" class-="hidden">
+                    <a class="current-page" href=""><span>#</span>home</a>
+                    <a href=""><span>#</span>projects</a>
+                    <a href=""><span>#</span>about-me</a>
+                    <a href=""><span>#</span>contacts</a>
+                </div>
+            </div>
+            
+            <div id="hamburger-menu">
+                <span class="line line1"></span>
+                <span class="line line2"></span>
+            </div>
         </nav>
     </header>
     <main>

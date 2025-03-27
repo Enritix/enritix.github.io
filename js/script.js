@@ -12,3 +12,14 @@ function updateProject() {
 setInterval(updateProject, 2000);
 
 updateProject();
+
+const hamburgerMenu = document.querySelector("#hamburger-menu");
+const mobileNav = document.querySelector("#mobile-nav-container");
+
+hamburgerMenu.addEventListener("click", () => {
+    // Toggle the active class for the hamburger menu
+    hamburgerMenu.classList.toggle("active");
+
+    // Toggle the hidden class for the mobile navigation
+    mobileNav.classList.toggle("hidden");
+});
