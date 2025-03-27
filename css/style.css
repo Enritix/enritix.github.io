@@ -567,10 +567,6 @@ footer aside {
         width: 20px;
         height: 20px;
     }
-
-    #contact-icons-container {
-        display: none;
-    }
     
     main {
         margin-top: 800px;
@@ -642,4 +638,55 @@ footer aside {
         z-index: 1;
         margin-top: auto;
     }
+
+    #contact-icons-container {
+        display: none;
+    }
+
+    #mobile-contact-icons {
+        display: flex;
+        position: absolute;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        gap: 30px;
+        bottom: 150px;
+        left: 90px;
+    }
+    
+    #mobile-contact-icons a img {
+        width: auto;
+        height: 50px; 
+        filter: brightness(0) invert(0.7);
+    }
+
+    #mobile-contact-icons a img:hover {
+        filter: brightness(0) invert(1);
+    }
+
+    /* #contact-icons-container {
+        display: none;
+        flex-direction: row;
+        top: 0;
+        left: 25px;
+        z-index: 1001;
+    }
+    
+    #contact-icons-container #contact-icons-line {
+        display: none;
+    }
+    
+    #contact-icons-container #contact-icons {
+        position: absolute;
+        display: flex;
+        flex-direction: row;
+        top: 80vh;
+        left: 0;
+        gap: 20px;
+    }
+
+    #contact-icons-container #contact-icons a img {
+        width: auto;
+        height: 80px; 
+    }*/
 }
