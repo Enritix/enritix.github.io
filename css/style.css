@@ -543,14 +543,14 @@ footer aside {
     }
     
     .hero #dots1 {
-        top: 66vh;
-        right: 20vw;
+        top: 72vh;
+        right: 15vw;
         height: 75px;
     }
     
     .hero #working-on {
         position: absolute;
-        top: 76.5vh;
+        top: 84vh;
         left: 50%;
         transform: translateX(-50%);
         height: 50px;
