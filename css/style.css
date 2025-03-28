@@ -238,6 +238,29 @@ span {
     color: var(--text-color);
 }
 
+#current-project {
+    display: inline-block;
+    font-family: 'Fira Code', monospace;
+}
+
+#current-project::after {
+    content: "";
+    display: inline-block;
+    width: 2px;
+    height: 1em;
+    background-color: var(--text-color);
+    animation: blink 0.8s steps(1, start) infinite;
+}
+
+@keyframes blink {
+    0%, 100% {
+        opacity: 0;
+    }
+    50% {
+        opacity: 1;
+    }
+}
+
 #contact-icons-container {
     position: fixed;
     display: flex;
