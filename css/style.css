@@ -539,7 +539,7 @@ footer aside {
 
     .hero {
         position: absolute;
-        top: 100px;
+        top: 60px;
         left: var(--margin-left);
         font-size: 3vh;
     }
@@ -553,27 +553,27 @@ footer aside {
     }
 
     .hero #big-logo {
-        top: 35vh;
+        top: 37.5vh;
         left: 5%;
         width: 200px;
         height: 200px;
     }
     
     .hero #my-picture {
-        top: 30vh;
+        top: 32.5vh;
         left: 10%;
         height: 400px;
     }
     
     .hero #dots1 {
-        top: 72vh;
+        top: 74.5vh;
         right: 15vw;
         height: 75px;
     }
     
     .hero #working-on {
         position: absolute;
-        top: 84vh;
+        top: 92vh;
         left: 50%;
         transform: translateX(-50%);
         height: 50px;
