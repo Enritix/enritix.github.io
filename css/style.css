@@ -142,9 +142,9 @@ span {
 }
 
 .hero {
-    position: absolute;
-    top: 250px;
-    left: var(--margin-left);
+    display: flex;
+    /* position: absolute; */
+    margin-left: var(--margin-left);
     font-size: 3vh;
 }
 
@@ -195,44 +195,54 @@ span {
     transition-delay: 0.3s;
 }
 
+#hero-images {
+    display: flex;
+    position: relative;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    margin: 0 auto;
+}
+
 .hero #big-logo {
     position: absolute;
-    top: 50px;
-    right: -30%;
+    top: 3vh;
+    left: 15vw;
     width: 200px;
     height: 200px;
+    z-index: -1;
 }
 
 .hero #my-picture {
-    position: absolute;
-    top: -50px;
-    right: -50%;
-    height: 400px;
+    width: auto; /* Allow the image to scale naturally */
+    max-width: 100%; /* Ensure responsiveness */
+    height: 400px; /* Maintain the original height */
+    object-fit: cover; /* Ensure the image scales properly */
 }
 
 .hero #dots1 {
     position: absolute;
-    top: 250px;
-    right: -45%;
+    bottom: 7vh;
+    right: 20vw;
     height: 75px;
 }
 
 .hero #working-on {
-    position: absolute;
-    top: 350px;
-    right: -55%;
-    height: 25px;
-    padding: 5px 40px;
-    font-size: 20px;
-    color: var(--secondary-color);
+    position: relative;
+    padding: 10px 40px;
     border: var(--secondary-color) 2px solid;
+    background-color: var(--background-color);
+    color: var(--secondary-color);
+    font-size: 20px;
+    font-weight: bold;
+    width: auto;
 }
 
 .hero #working-on::before {
     content: '';
     position: absolute;
-    top: 17%;
-    left: 10px;
+    top: 25%;
+    left: 0.5vw;
     width: 20px;
     height: 20px;
     background-color: var(--primary-color-opacity);
@@ -299,7 +309,7 @@ span {
 }
 
 main {
-    margin-top: 700px;
+    margin-top: 230px;
 }
 
 .projects {
@@ -623,10 +633,10 @@ footer aside {
     }
 
     .hero {
-        position: absolute;
-        top: 60px;
+        flex-direction: column;
         left: var(--margin-left);
         font-size: 3vh;
+        gap: 20px;
     }
 
     .hero h2 {
@@ -638,29 +648,23 @@ footer aside {
     }
 
     .hero #big-logo {
-        top: 32.5vh;
-        left: 0;
+        top: 8vh;
+        left: -8vw;
         width: 200px;
         height: 200px;
     }
 
     .hero #my-picture {
-        top: 32.5vh;
-        left: 10%;
         height: 400px;
     }
 
     .hero #dots1 {
-        top: 77.5vh;
+        bottom: 12vh;
         right: 15vw;
         height: 75px;
     }
 
     .hero #working-on {
-        position: absolute;
-        top: 92vh;
-        left: 50vh;
-        transform: translateX(-50vh);
         height: 50px;
         min-width: auto;
         width: 70vw;
@@ -677,12 +681,16 @@ footer aside {
     }
 
     main {
-        margin-top: 800px;
+        margin-top: 75px;
     }
 
     #projects-header {
         display: flex;
         align-items: center;
+    }
+
+    #projects-header h2::after {
+        width: 20vw;
     }
 
     #projects-header h2 {
@@ -692,7 +700,7 @@ footer aside {
     }
 
     #projects-header a {
-        margin-left: 15px;
+        margin-left: auto;
         margin-right: 0;
     }
 
