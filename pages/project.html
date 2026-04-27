@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Project — Enrico</title>
+<meta name="description" content="Project detail — Enrico Egghe">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@300;400;500&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+<script type="module" src="https://unpkg.com/@lottiefiles/dotlottie-wc@latest/dist/dotlottie-wc.js"></script>
+<style>
+  :root{
+    --bg:#0c0c0b;--bg2:#131312;--bg3:#1a1a18;
+    --line:rgba(255,255,255,0.07);--line2:rgba(255,255,255,0.14);
+    --text:#f0ede6;--muted:#8a8880;--accent:#c8f060;--accent2:#e8d5a3;
+    --serif:'DM Serif Display',Georgia,serif;
+    --sans:'DM Sans',system-ui,sans-serif;
+    --mono:'DM Mono',monospace;
+  }
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{background:var(--bg);color:var(--text);font-family:var(--sans);font-size:16px;line-height:1.6;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+
+  /* NAV */
+  nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:center;justify-content:space-between;padding:1.25rem 2.5rem;background:rgba(12,12,11,.85);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+  .nav-logo{font-family:var(--mono);font-size:.85rem;letter-spacing:.05em;color:var(--accent);text-decoration:none;font-weight:500}
+  .nav-back{font-family:var(--mono);font-size:.75rem;letter-spacing:.08em;color:var(--muted);text-decoration:none;text-transform:uppercase;display:flex;align-items:center;gap:.4rem;transition:color .2s}
+  .nav-back:hover{color:var(--text)}
+  .nav-cta{font-family:var(--mono);font-size:.78rem;letter-spacing:.08em;color:var(--bg);background:var(--accent);border:none;padding:.45rem 1.1rem;border-radius:2px;cursor:pointer;text-decoration:none;font-weight:500;transition:opacity .2s}
+  .nav-cta:hover{opacity:.85}
+  .nav-burger{display:none;width:40px;height:40px;cursor:pointer;background:none;border:none;padding:0;position:relative;z-index:210;align-items:center;justify-content:center;color:var(--accent)}
+  .nav-burger svg path{fill:var(--accent)}
+  .nav-burger #burger-lottie{fill:var(--accent)}
+  dotlottie-player{--lottie-fill-color:var(--accent);--lottie-stroke-color:var(--accent)}
+  #animation-container #animation svg{fill:var(--accent) !important}
+  .nav-burger canvas{display:block;width:40px !important;height:40px !important}
+  .drawer-overlay{display:none;position:fixed;inset:0;z-index:190;background:rgba(0,0,0,.6);backdrop-filter:blur(4px);opacity:0;pointer-events:none}
+  .drawer-overlay.active{display:block;pointer-events:auto}
+  .drawer{position:fixed;top:0;right:0;bottom:0;z-index:195;width:min(380px,100vw);background:var(--bg2);border-left:1px solid var(--line2);display:flex;flex-direction:column;padding:5rem 2.5rem 2.5rem;opacity:1;pointer-events:none;will-change:transform}
+  .drawer-links{list-style:none;display:flex;flex-direction:column;gap:0;flex:1}
+  .drawer-links li{overflow:hidden;border-bottom:1px solid var(--line);width:100%}
+  .drawer-links a{font-family:var(--serif);font-size:clamp(1.6rem,5vw,2rem);font-weight:400;color:var(--muted);text-decoration:none;letter-spacing:-.01em;display:flex;align-items:center;justify-content:space-between;padding:1.1rem 0;transition:color .2s;width:100%;min-height:72px}
+  .drawer-links a:hover{color:var(--text)}
+  .drawer-num{font-family:var(--mono);font-size:.65rem;letter-spacing:.1em;color:var(--line2);align-self:flex-start;margin-top:.3rem}
+  .drawer-cta{margin-top:2rem;font-family:var(--mono);font-size:.8rem;letter-spacing:.08em;color:var(--bg);background:var(--accent);border:none;padding:.9rem 1.6rem;border-radius:2px;cursor:pointer;text-decoration:none;font-weight:500;display:block;text-align:center}
+  .drawer-socials{display:flex;gap:1.25rem;margin-top:1.5rem;padding-top:1.5rem;border-top:1px solid var(--line)}
+  .drawer-socials a{font-family:var(--mono);font-size:.7rem;letter-spacing:.08em;color:var(--muted);text-decoration:none;text-transform:uppercase;transition:color .2s}
+  .drawer-socials a:hover{color:var(--accent)}
+  @media(max-width:720px){
+    nav{padding:1rem 1.5rem}
+    .nav-back{display:none}
+    .nav-burger{display:flex}
+  }
+  @media(max-width:520px){.drawer{width:100vw;border-left:none}}
+  @media(max-width:720px){.drawer-links,.drawer-links li,.drawer-links a{width:100%}}
+  @media(min-width:721px){.drawer,.drawer-overlay{display:none !important}}
+
+  /* SKELETON ANIMATIONS */
+  @keyframes shimmer{0%{background-position:-600px 0}100%{background-position:600px 0}}
+  .skeleton{background:linear-gradient(90deg,var(--bg2) 25%,var(--bg3) 50%,var(--bg2) 75%);background-size:1200px 100%;animation:shimmer 1.5s infinite}
+
+  /* SKELETON LAYOUT */
+  .skeleton-hero{height:480px;width:100%;margin-top:64px}
+  .skeleton-body-wrap{max-width:900px;margin:0 auto;padding:4rem 2.5rem}
+  .skeleton-label{height:10px;width:120px;border-radius:2px;margin-bottom:1.25rem}
+  .skeleton-h1{height:48px;width:75%;border-radius:2px;margin-bottom:.75rem}
+  .skeleton-h1b{height:48px;width:55%;border-radius:2px;margin-bottom:2rem}
+  .skeleton-tags{display:flex;gap:.5rem;margin-bottom:3rem}
+  .skeleton-tag{height:24px;width:70px;border-radius:2px}
+  .skeleton-p{height:12px;border-radius:2px;margin-bottom:.6rem}
+  .skeleton-divider{height:1px;background:var(--line);margin:3rem 0}
+
+  /* ERROR */
+  .error-state{max-width:600px;margin:120px auto;padding:2.5rem;text-align:center}
+  .error-state h2{font-family:var(--serif);font-size:2rem;font-weight:400;margin-bottom:1rem;color:var(--muted)}
+  .error-state p{color:var(--muted);margin-bottom:2rem}
+  .btn-ghost{font-family:var(--mono);font-size:.8rem;letter-spacing:.08em;color:var(--text);border:1px solid var(--line2);padding:.65rem 1.6rem;border-radius:2px;text-decoration:none;display:inline-block;transition:border-color .2s}
+  .btn-ghost:hover{border-color:var(--muted)}
+
+  /* HERO BANNER */
+  .project-hero{width:100%;height:480px;display:flex;align-items:flex-end;position:relative;overflow:hidden;margin-top:64px;border-bottom:1px solid var(--line)}
+  .project-hero-bg{position:absolute;inset:0;display:flex;align-items:center;justify-content:center}
+  .project-hero-grid{position:absolute;inset:0;background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);background-size:60px 60px}
+  .project-hero-content{position:relative;z-index:1;padding:3rem 5rem;width:100%}
+  .breadcrumb{font-family:var(--mono);font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:1rem;display:flex;align-items:center;gap:.5rem}
+  .breadcrumb a{color:var(--muted);text-decoration:none;transition:color .2s}
+  .breadcrumb a:hover{color:var(--accent)}
+  .breadcrumb-sep{opacity:.4}
+  .project-hero-title{font-family:var(--serif);font-size:clamp(2.5rem,6vw,5rem);font-weight:400;line-height:1.05;letter-spacing:-.02em;margin-bottom:.6rem}
+  .project-hero-sub{font-size:1.05rem;color:var(--muted)}
+  @media(max-width:720px){
+    .project-hero{height:auto;padding-top:3rem}
+    .project-hero-content{padding:2rem 2rem}
+  }
+
+  /* CONTENT */
+  .project-content{max-width:860px;margin:0 auto;padding:4rem 5rem 6rem}
+  @media(max-width:900px){.project-content{padding:3rem 3rem 5rem}}
+  @media(max-width:600px){.project-content{padding:2.5rem 2rem 4rem}}
+
+  /* META BAR */
+  .meta-bar{display:flex;flex-wrap:wrap;gap:2rem;padding-bottom:2.5rem;border-bottom:1px solid var(--line);margin-bottom:3rem}
+  .meta-item{}
+  .meta-label{font-family:var(--mono);font-size:.65rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:.3rem}
+  .meta-value{font-size:.95rem;font-weight:500}
+  .tags-wrap{display:flex;flex-wrap:wrap;gap:.4rem}
+  .tag{font-family:var(--mono);font-size:.65rem;letter-spacing:.08em;background:var(--bg3);border:1px solid var(--line2);color:var(--muted);padding:.2rem .55rem;border-radius:2px;text-transform:uppercase}
+
+  /* BODY TEXT */
+  .project-description{margin-bottom:3rem}
+  .project-description p{font-size:1.05rem;color:var(--muted);line-height:1.85;margin-bottom:1.5rem}
+  .project-description p:last-child{margin-bottom:0}
+
+  /* LINKS */
+  .project-links-section{border-top:1px solid var(--line);padding-top:2.5rem;margin-bottom:3rem}
+  .project-links-label{font-family:var(--mono);font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:1rem}
+  .project-link-btns{display:flex;gap:.75rem;flex-wrap:wrap}
+  .btn-primary{font-family:var(--mono);font-size:.8rem;letter-spacing:.08em;background:var(--accent);color:var(--bg);padding:.65rem 1.6rem;border:none;border-radius:2px;cursor:pointer;text-decoration:none;font-weight:500;transition:opacity .2s;display:inline-block}
+  .btn-primary:hover{opacity:.85}
+
+  /* RELATED */
+  .related-section{border-top:1px solid var(--line);padding-top:3rem}
+  .related-label{font-family:var(--mono);font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);margin-bottom:1.5rem;display:flex;align-items:center;gap:.6rem}
+  .related-label::before{content:'';width:32px;height:1px;background:var(--accent)}
+  .related-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:1px;background:var(--line);border:1px solid var(--line)}
+  .related-card{background:var(--bg2);padding:1.25rem;cursor:pointer;transition:background .2s;text-decoration:none;display:block;color:var(--text)}
+  .related-card:hover{background:var(--bg3)}
+  .related-card-type{font-family:var(--mono);font-size:.65rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:.4rem}
+  .related-card-title{font-size:.95rem;font-weight:500;margin-bottom:.3rem}
+  .related-card-arrow{font-family:var(--mono);font-size:.72rem;color:var(--accent)}
+
+  /* FOOTER */
+  footer{padding:2.5rem;display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:1rem;border-top:1px solid var(--line)}
+  .footer-left{font-family:var(--mono);font-size:.72rem;color:var(--muted);letter-spacing:.05em}
+  .footer-left span{color:var(--text)}
+  .footer-right{display:flex;gap:1.25rem}
+  .footer-right a{font-family:var(--mono);font-size:.72rem;color:var(--muted);text-decoration:none;letter-spacing:.05em;transition:color .2s}
+  .footer-right a:hover{color:var(--accent)}
+  @media(max-width:720px){footer{padding:2rem 1.5rem}}
+
+  /* REVEAL */
+  
+  
+  @media(prefers-reduced-motion:reduce){*{animation-duration:.01ms !important;transition-duration:.01ms !important}}
+
+  body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:9999;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");opacity:.35}
+
+  /* ── Custom cursor ──────────────────────────────────────── */
+  @media (hover: hover) and (pointer: fine) {
+    * { cursor: none !important; }
+    input, textarea { cursor: text !important; }
+    #cur-dot {
+      position: fixed; top: 0; left: 0; z-index: 99999;
+      width: 5px; height: 5px; border-radius: 50%;
+      background: var(--accent);
+      pointer-events: none; will-change: transform; opacity: 0;
+    }
+    #cur-ring {
+      position: fixed; top: 0; left: 0; z-index: 99998;
+      width: 36px; height: 36px; border-radius: 50%;
+      border: 1.5px solid rgba(200, 240, 96, 0.4);
+      pointer-events: none; will-change: transform; opacity: 0;
+      display: flex; align-items: center; justify-content: center;
+      transition: width .4s cubic-bezier(.23,1,.32,1),
+                  height .4s cubic-bezier(.23,1,.32,1),
+                  background .3s, border-color .3s;
+    }
+    #cur-label {
+      font-family: var(--mono); font-size: .58rem;
+      letter-spacing: .1em; color: var(--bg);
+      text-transform: uppercase; white-space: nowrap;
+      opacity: 0; transition: opacity .2s;
+    }
+    body.cur-link #cur-ring { width: 52px; height: 52px; border-color: rgba(200,240,96,.9); }
+    body.cur-view #cur-ring { width: 74px; height: 74px; background: rgba(200,240,96,.1); border-color: var(--accent); }
+    body.cur-view #cur-label { opacity: 1; }
+  }
+</style>
+</head>
+<body>
+<div id="cur-dot" aria-hidden="true"></div>
+<div id="cur-ring" aria-hidden="true"><span id="cur-label">View</span></div>
+
+<nav>
+  <a class="nav-logo" href="../index.html">enritix.be</a>
+  <a class="nav-back" href="projects.html">← All projects</a>
+  <a class="nav-cta" href="../index.html#contacts">Hire me</a>
+  <button class="nav-burger" id="burger" aria-label="Open menu" aria-expanded="false">
+    <dotlottie-wc id="burger-lottie" src="https://lottie.host/c0e55b00-c7f9-4b46-ad49-6580b3277a45/KKmv1GM038.lottie" style="width:300px;height:300px"></dotlottie-wc>
+  </button>
+</nav>
+<div class="drawer-overlay" id="drawer-overlay" aria-hidden="true"></div>
+<nav class="drawer" id="drawer" aria-label="Mobile navigation">
+  <ul class="drawer-links">
+    <li><a href="projects.html"       class="drawer-link"><span>All projects</span><span class="drawer-num">←</span></a></li>
+    <li><a href="../index.html#projects" class="drawer-link"><span>Projects</span><span class="drawer-num">01</span></a></li>
+    <li><a href="../index.html#skills"   class="drawer-link"><span>Skills</span><span class="drawer-num">02</span></a></li>
+    <li><a href="../index.html#about"    class="drawer-link"><span>About</span><span class="drawer-num">03</span></a></li>
+    <li><a href="../index.html#contacts" class="drawer-link"><span>Contact</span><span class="drawer-num">04</span></a></li>
+  </ul>
+  <a href="../index.html#contacts" class="drawer-cta drawer-link">Hire me →</a>
+  <div class="drawer-socials">
+    <a href="https://be.linkedin.com/in/enrico-egghe-39b758306" target="_blank" rel="noopener">LinkedIn</a>
+    <a href="https://github.com/Enritix" target="_blank" rel="noopener">GitHub</a>
+    <a href="#" title="enritix">Discord</a>
+  </div>
+</nav>
+
+<!-- Skeleton shown while loading -->
+<div id="skeleton" aria-hidden="true" aria-label="Loading project">
+  <div class="skeleton-hero skeleton"></div>
+  <div class="skeleton-body-wrap">
+    <div class="skeleton-label skeleton"></div>
+    <div class="skeleton-h1 skeleton"></div>
+    <div class="skeleton-h1b skeleton"></div>
+    <div class="skeleton-tags">
+      <div class="skeleton-tag skeleton"></div>
+      <div class="skeleton-tag skeleton"></div>
+      <div class="skeleton-tag skeleton"></div>
+    </div>
+    <div class="skeleton-p skeleton" style="width:100%"></div>
+    <div class="skeleton-p skeleton" style="width:92%"></div>
+    <div class="skeleton-p skeleton" style="width:97%"></div>
+    <div class="skeleton-p skeleton" style="width:80%"></div>
+    <div class="skeleton-divider"></div>
+    <div class="skeleton-p skeleton" style="width:100%"></div>
+    <div class="skeleton-p skeleton" style="width:88%"></div>
+    <div class="skeleton-p skeleton" style="width:95%"></div>
+  </div>
+</div>
+
+<!-- Error state (hidden until needed) -->
+<div id="error-state" style="display:none">
+  <div class="error-state">
+    <h2>Project not found</h2>
+    <p>This project doesn't exist or the URL is incorrect.</p>
+    <a href="projects.html" class="btn-ghost">← View all projects</a>
+  </div>
+</div>
+
+<!-- Real content (hidden until loaded) -->
+<div id="content" style="display:none" role="main">
+  <div class="project-hero" id="project-hero">
+    <div class="project-hero-bg" id="hero-bg"></div>
+    <div class="project-hero-grid" aria-hidden="true"></div>
+    <div class="project-hero-content">
+      <div class="breadcrumb">
+        <a href="projects.html">Projects</a>
+        <span class="breadcrumb-sep">/</span>
+        <span id="hero-breadcrumb">—</span>
+      </div>
+      <h1 class="project-hero-title" id="hero-title">—</h1>
+      <p class="project-hero-sub" id="hero-sub">—</p>
+    </div>
+  </div>
+
+  <div class="project-content">
+    <div class="meta-bar">
+      <div class="meta-item">
+        <div class="meta-label">Year</div>
+        <div class="meta-value" id="meta-year">—</div>
+      </div>
+      <div class="meta-item">
+        <div class="meta-label">Type</div>
+        <div class="meta-value" id="meta-type">—</div>
+      </div>
+      <div class="meta-item">
+        <div class="meta-label">Technologies</div>
+        <div class="tags-wrap" id="meta-tags"></div>
+      </div>
+    </div>
+
+    <div class="project-description" id="project-description" style="transition-delay:.1s"></div>
+
+    <div class="project-links-section" id="project-links-section" style="transition-delay:.15s">
+      <div class="project-links-label">Live links</div>
+      <div class="project-link-btns" id="project-link-btns"></div>
+    </div>
+
+    <div class="related-section" id="related-section" style="transition-delay:.2s">
+      <div class="related-label">Other projects</div>
+      <div class="related-grid" id="related-grid"></div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-left">© 2025 <span>Enrico Egghe</span></div>
+  <div class="footer-right">
+    <a href="projects.html">← All projects</a>
+    <a href="../index.html">Home</a>
+  </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="../data/projects-data.js"></script>
+<script>
+(function () {
+  gsap.registerPlugin(ScrollTrigger);
+
+  /* ── Utilities ────────────────────────────────────── */
+  function addUnderlineHover(els) {
+    els.forEach(el => {
+      if (el.querySelector('.ul-line')) return;
+      el.style.position = 'relative';
+      const line = document.createElement('span');
+      line.className = 'ul-line';
+      line.style.cssText = 'position:absolute;bottom:-1px;left:0;height:1px;width:0;background:currentColor;pointer-events:none';
+      el.appendChild(line);
+      const ln = el.querySelector('.ul-line');
+      el.addEventListener('mouseenter', () => gsap.to(ln, { width: '100%', duration: .3, ease: 'power2.out' }));
+      el.addEventListener('mouseleave', () => gsap.to(ln, { width: 0, duration: .25, ease: 'power2.in' }));
+    });
+  }
+
+  function addArrowHover(els) {
+    els.forEach(el => {
+      if (!el.querySelector('.arrow'))
+        el.innerHTML = el.innerHTML.replace(/(→)(?!<)/, '<span class="arrow" style="display:inline-block">→</span>');
+      const arrow = el.querySelector('.arrow');
+      if (!arrow) return;
+      el.addEventListener('mouseenter', () =>
+        gsap.timeline()
+          .to(arrow, { x: 12, opacity: 0, duration: .17, ease: 'power2.in' })
+          .set(arrow, { x: -8 })
+          .to(arrow,  { x: 0, opacity: 1, duration: .2, ease: 'power2.out' }));
+    });
+  }
+
+  function addPrimaryHover(els) {
+    els.forEach(el => {
+      el.style.position = 'relative'; el.style.overflow = 'hidden';
+      const sw = document.createElement('span');
+      sw.style.cssText = 'position:absolute;inset:0;background:rgba(0,0,0,.12);transform:scaleX(0);transform-origin:left;pointer-events:none;border-radius:inherit';
+      el.appendChild(sw);
+      el.addEventListener('mouseenter', () => {
+        gsap.fromTo(sw, { scaleX: 0, transformOrigin: 'left' }, { scaleX: 1, duration: .3, ease: 'power2.out' });
+        gsap.to(el, { scale: 1.04, y: -2, duration: .2, ease: 'back.out(2)' });
+      });
+      el.addEventListener('mouseleave', () => {
+        gsap.to(sw, { scaleX: 0, transformOrigin: 'right', duration: .28, ease: 'power2.in' });
+        gsap.to(el, { scale: 1, y: 0, duration: .22, ease: 'power2.inOut' });
+      });
+      el.addEventListener('mousedown', () => gsap.to(el, { scale: .96, duration: .1 }));
+      el.addEventListener('mouseup',   () => gsap.to(el, { scale: 1.04, duration: .14, ease: 'back.out(2)' }));
+    });
+  }
+
+  function addGhostHover(els) {
+    els.forEach(el => {
+      el.style.position = 'relative'; el.style.overflow = 'hidden';
+      const fill = document.createElement('span');
+      fill.style.cssText = 'position:absolute;inset:0;background:rgba(255,255,255,.06);transform:scaleX(0);transform-origin:left;pointer-events:none;border-radius:inherit';
+      el.appendChild(fill);
+      el.addEventListener('mouseenter', () => {
+        gsap.to(fill, { scaleX: 1, duration: .3, ease: 'power2.out' });
+        gsap.to(el, { scale: 1.03, y: -2, duration: .2, ease: 'back.out(2)' });
+      });
+      el.addEventListener('mouseleave', () => {
+        gsap.to(fill, { scaleX: 0, transformOrigin: 'right', duration: .28, ease: 'power2.in' });
+        gsap.to(el, { scale: 1, y: 0, duration: .22, ease: 'power2.inOut' });
+      });
+      el.addEventListener('mousedown', () => gsap.to(el, { scale: .97, duration: .1 }));
+      el.addEventListener('mouseup',   () => gsap.to(el, { scale: 1.03, duration: .14, ease: 'back.out(2)' }));
+    });
+  }
+
+  /* ── Setup ────────────────────────────────────────── */
+  const params = new URLSearchParams(window.location.search);
+  const id = params.get('id');
+  const skeleton   = document.getElementById('skeleton');
+  const errorState = document.getElementById('error-state');
+  const content    = document.getElementById('content');
+
+  gsap.from('nav', { y: -20, opacity: 0, duration: .6, ease: 'power3.out', delay: .1 });
+
+  /* ── Drawer nav + Lottie burger ─────────────────── */
+  const burger  = document.getElementById('burger');
+  const drawer  = document.getElementById('drawer');
+  const overlay = document.getElementById('drawer-overlay');
+  const lottiePlayer = document.getElementById('burger-lottie');
+  let dotLottieInstance = null;
+  let drawerOpen = false;
+
+  function setupDrawer() {
+    gsap.set(drawer, { xPercent: 100 });
+    gsap.set(overlay, { opacity: 0 });
+    drawer.style.pointerEvents = 'none';
+  }
+
+  function initLottie() {
+    if (!lottiePlayer) return;
+    const tryGetInstance = () => {
+      dotLottieInstance = lottiePlayer.dotLottie;
+      if (!dotLottieInstance) requestAnimationFrame(tryGetInstance);
+    };
+    if (window.customElements) {
+      window.customElements.whenDefined('dotlottie-wc').then(tryGetInstance);
+    } else {
+      requestAnimationFrame(tryGetInstance);
+    }
+  }
+
+  function playLottie(mode) {
+    if (!dotLottieInstance && lottiePlayer) dotLottieInstance = lottiePlayer.dotLottie;
+    if (!dotLottieInstance) return;
+    dotLottieInstance.setMode(mode);
+    dotLottieInstance.setSpeed(2.5);
+    if (typeof dotLottieInstance.setFrame === 'function') dotLottieInstance.setFrame(0);
+    dotLottieInstance.play();
+  }
+
+  initLottie();
+
+  function openDrawer() {
+    drawerOpen = true;
+    burger.setAttribute('aria-expanded', 'true');
+    overlay.classList.add('active');
+    document.body.style.overflow = 'hidden';
+    drawer.style.pointerEvents = 'auto';
+    playLottie('forward');
+    gsap.to(overlay, { opacity: 1, duration: 0.3, ease: 'power2.out' });
+    gsap.to(drawer, { xPercent: 0, duration: 0.45, ease: 'power4.out' });
+    gsap.fromTo(
+      drawer.querySelectorAll('.drawer-link, .drawer-cta, .drawer-socials'),
+      { opacity: 0, x: 30 },
+      { opacity: 1, x: 0, stagger: 0.05, duration: 0.35, delay: 0.12, ease: 'power2.out', overwrite: true }
+    );
+  }
+
+  function closeDrawer() {
+    drawerOpen = false;
+    burger.setAttribute('aria-expanded', 'false');
+    document.body.style.overflow = '';
+    playLottie('reverse');
+    gsap.to(overlay, { opacity: 0, duration: 0.25, ease: 'power2.out',
+      onComplete: () => overlay.classList.remove('active') });
+    gsap.to(drawer, { xPercent: 100, duration: 0.42, ease: 'power3.inOut',
+      onComplete: () => { drawer.style.pointerEvents = 'none'; } });
+  }
+
+  burger.addEventListener('click', () => drawerOpen ? closeDrawer() : openDrawer());
+  overlay.addEventListener('click', closeDrawer);
+  drawer.querySelectorAll('.drawer-link').forEach(a => a.addEventListener('click', closeDrawer));
+
+  setupDrawer();
+
+  drawer.querySelectorAll('li a').forEach(el => {
+    el.addEventListener('mouseenter', () => {
+      gsap.to(el, { x: 6, duration: .2, ease: 'power2.out' });
+      const num = el.querySelector('.drawer-num');
+      if (num) gsap.to(num, { color: 'var(--accent)', duration: .2 });
+    });
+    el.addEventListener('mouseleave', () => {
+      gsap.to(el, { x: 0, duration: .22, ease: 'power2.inOut' });
+      const num = el.querySelector('.drawer-num');
+      if (num) gsap.to(num, { color: 'rgba(255,255,255,.14)', duration: .2 });
+    });
+  });
+
+  function fetchProject(projectId) {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        const project = PROJECTS.find(p => p.id === projectId);
+        project ? resolve(project) : reject(new Error('Not found'));
+      }, 700);
+    });
+  }
+
+  function fetchRelated(projectId) {
+    return new Promise(resolve => {
+      setTimeout(() => resolve(PROJECTS.filter(p => p.id !== projectId).slice(0, 3)), 0);
+    });
+  }
+
+  function render(project, related) {
+    document.title = `${project.title} — Enrico`;
+    document.querySelector('meta[name="description"]').content = project.summary;
+
+    document.getElementById('hero-breadcrumb').textContent = project.title;
+    document.getElementById('hero-title').textContent = project.title;
+    document.getElementById('hero-sub').textContent = project.subtitle;
+    document.getElementById('hero-bg').style.cssText = `background:${project.gradient};position:absolute;inset:0`;
+    document.documentElement.style.setProperty('--accent', project.accent);
+
+    document.getElementById('meta-year').textContent = project.year;
+    document.getElementById('meta-type').textContent = project.type;
+    const tagsEl = document.getElementById('meta-tags');
+    project.tags.forEach(t => {
+      const s = document.createElement('span'); s.className = 'tag'; s.textContent = t; tagsEl.appendChild(s);
+    });
+
+    const descEl = document.getElementById('project-description');
+    project.description.forEach(para => {
+      const p = document.createElement('p'); p.textContent = para; descEl.appendChild(p);
+    });
+
+    const linksEl = document.getElementById('project-link-btns');
+    if (project.links && project.links.length) {
+      project.links.forEach((link, i) => {
+        const a = document.createElement('a');
+        a.href = link.url; a.target = '_blank'; a.rel = 'noopener noreferrer';
+        a.className = i === 0 ? 'btn-primary' : 'btn-ghost';
+        a.textContent = link.label + ' →';
+        linksEl.appendChild(a);
+      });
+    } else {
+      document.getElementById('project-links-section').style.display = 'none';
+    }
+
+    const relatedGrid = document.getElementById('related-grid');
+    related.forEach(p => {
+      const a = document.createElement('a');
+      a.className = 'related-card'; a.href = `project.html?id=${p.id}`;
+      a.innerHTML = `<div class="related-card-type">${p.type} · ${p.year}</div>
+        <div class="related-card-title">${p.title}</div>
+        <div class="related-card-arrow">View →</div>`;
+      relatedGrid.appendChild(a);
+    });
+
+    gsap.to(skeleton, {
+      opacity: 0, duration: .3, ease: 'power2.in',
+      onComplete: () => {
+        skeleton.style.display = 'none';
+        content.style.display = 'block';
+        initAnimations();
+      }
+    });
+  }
+
+  function initAnimations() {
+    /* Hero */
+    gsap.timeline({ defaults: { ease: 'power3.out' }, delay: .05 })
+      .fromTo('.breadcrumb',         { opacity: 0, x: -16 }, { opacity: 1, x: 0, duration: .45 })
+      .fromTo('.project-hero-title', { opacity: 0, y: 36  }, { opacity: 1, y: 0, duration: .7  }, '-=.2')
+      .fromTo('.project-hero-sub',   { opacity: 0, y: 18  }, { opacity: 1, y: 0, duration: .5  }, '-=.3');
+
+    /* Scroll sections */
+    gsap.fromTo('.meta-bar',
+      { opacity: 0, y: 22 },
+      { opacity: 1, y: 0, duration: .55, ease: 'power2.out',
+        scrollTrigger: { trigger: '.meta-bar', start: 'top 88%', once: true } });
+
+    gsap.utils.toArray('#meta-tags .tag').forEach((t, i) =>
+      gsap.fromTo(t,
+        { opacity: 0, scale: .8 },
+        { opacity: 1, scale: 1, duration: .3, delay: i * .05, ease: 'back.out(1.6)',
+          scrollTrigger: { trigger: '.meta-bar', start: 'top 88%', once: true } }));
+
+    gsap.utils.toArray('#project-description p').forEach((p, i) =>
+      gsap.fromTo(p,
+        { opacity: 0, y: 20 },
+        { opacity: 1, y: 0, duration: .55, delay: i * .1, ease: 'power2.out',
+          scrollTrigger: { trigger: p, start: 'top 90%', once: true } }));
+
+    gsap.fromTo('.project-links-section',
+      { opacity: 0, y: 18 },
+      { opacity: 1, y: 0, duration: .5, ease: 'power2.out',
+        scrollTrigger: { trigger: '.project-links-section', start: 'top 90%', once: true } });
+
+    gsap.fromTo('.related-label',
+      { opacity: 0, x: -20 },
+      { opacity: 1, x: 0, duration: .45, ease: 'power2.out',
+        scrollTrigger: { trigger: '.related-section', start: 'top 88%', once: true } });
+
+    gsap.utils.toArray('.related-card').forEach((card, i) =>
+      gsap.fromTo(card,
+        { opacity: 0, y: 24 },
+        { opacity: 1, y: 0, duration: .45, delay: i * .1, ease: 'power3.out',
+          scrollTrigger: { trigger: '.related-grid', start: 'top 90%', once: true } }));
+
+    /* Interactions */
+    addPrimaryHover(document.querySelectorAll('.btn-primary'));
+    addGhostHover(document.querySelectorAll('.btn-ghost'));
+    addArrowHover(document.querySelectorAll('.btn-primary, .btn-ghost'));
+    addUnderlineHover(document.querySelectorAll('.footer-right a'));
+
+    document.querySelectorAll('.related-card').forEach(el => {
+      const arrow = el.querySelector('.related-card-arrow');
+      el.addEventListener('mouseenter', () => {
+        gsap.to(el, { y: -4, duration: .2, ease: 'power2.out' });
+        if (arrow) gsap.timeline()
+          .to(arrow, { x: 10, opacity: 0, duration: .16, ease: 'power2.in' })
+          .set(arrow, { x: -6 })
+          .to(arrow,  { x: 0, opacity: 1, duration: .2, ease: 'power2.out' });
+      });
+      el.addEventListener('mouseleave', () => gsap.to(el, { y: 0, duration: .22, ease: 'power2.inOut' }));
+    });
+
+    /* nav-back arrow slides left on hover */
+    const navBack = document.querySelector('.nav-back');
+    if (navBack) {
+      navBack.innerHTML = navBack.innerHTML.replace('←', '<span class="back-arrow" style="display:inline-block">←</span>');
+      const ba = navBack.querySelector('.back-arrow');
+      navBack.addEventListener('mouseenter', () => {
+        gsap.to(ba, { x: -5, duration: .2, ease: 'power2.out' });
+        gsap.to(navBack, { x: -3, duration: .2, ease: 'power2.out' });
+      });
+      navBack.addEventListener('mouseleave', () => {
+        gsap.to(ba, { x: 0, duration: .22, ease: 'power2.inOut' });
+        gsap.to(navBack, { x: 0, duration: .22, ease: 'power2.inOut' });
+      });
+    }
+  }
+
+  function showError() {
+    gsap.to(skeleton, {
+      opacity: 0, duration: .3,
+      onComplete: () => {
+        skeleton.style.display = 'none';
+        errorState.style.display = 'block';
+        gsap.from('.error-state', { opacity: 0, y: 24, duration: .5, ease: 'power2.out' });
+        addGhostHover(document.querySelectorAll('.btn-ghost'));
+      }
+    });
+  }
+
+  if (!id) { showError(); return; }
+  Promise.all([fetchProject(id), fetchRelated(id)])
+    .then(([project, related]) => render(project, related))
+    .catch(() => showError());
+
+  /* ── Custom cursor ─────────────────────────────────────── */
+  (function() {
+    if (!window.matchMedia('(hover:hover) and (pointer:fine)').matches) return;
+    const dot  = document.getElementById('cur-dot');
+    const ring = document.getElementById('cur-ring');
+    if (!dot || !ring) return;
+
+    gsap.set([dot, ring], { xPercent: -50, yPercent: -50 });
+    const xDot  = gsap.quickTo(dot,  'x', { duration: .1,  ease: 'power3' });
+    const yDot  = gsap.quickTo(dot,  'y', { duration: .1,  ease: 'power3' });
+    const xRing = gsap.quickTo(ring, 'x', { duration: .45, ease: 'power3' });
+    const yRing = gsap.quickTo(ring, 'y', { duration: .45, ease: 'power3' });
+
+    let visible = false;
+    window.addEventListener('mousemove', e => {
+      xDot(e.clientX); yDot(e.clientY);
+      xRing(e.clientX); yRing(e.clientY);
+      if (!visible) {
+        gsap.to([dot, ring], { opacity: 1, duration: .4, overwrite: 'auto' });
+        visible = true;
+      }
+    }, { passive: true });
+
+    document.addEventListener('mouseleave', () => {
+      gsap.to([dot, ring], { opacity: 0, duration: .3, overwrite: 'auto' });
+      visible = false;
+    });
+    document.addEventListener('mouseenter', () => {
+      gsap.to(ring, { opacity: 1, duration: .3, overwrite: 'auto' });
+      if (!document.body.classList.contains('cur-link') &&
+          !document.body.classList.contains('cur-view'))
+        gsap.to(dot, { opacity: 1, duration: .3, overwrite: 'auto' });
+      visible = true;
+    });
+
+    const CARD = '.project-card, .related-card';
+    const LINK = 'a, button, [role="button"], .filter-btn, .contact-link';
+
+    function setMode(mode) {
+      document.body.classList.toggle('cur-link', mode === 'link');
+      document.body.classList.toggle('cur-view', mode === 'view');
+      gsap.to(dot, { scale: mode ? 0 : 1, duration: .2, ease: 'power2.inOut', overwrite: 'auto' });
+    }
+
+    document.addEventListener('mouseover', e => {
+      if (e.target.closest(CARD)) setMode('view');
+      else if (e.target.closest(LINK)) setMode('link');
+      else setMode('');
+    }, { passive: true });
+  })();
+})();
+</script>
+</body>
+</html>

@@ -143,7 +143,6 @@ span {
 
 .hero {
     display: flex;
-    /* position: absolute; */
     margin-left: var(--margin-left);
     font-size: 3vh;
 }
@@ -214,10 +213,10 @@ span {
 }
 
 .hero #my-picture {
-    width: auto; /* Allow the image to scale naturally */
-    max-width: 100%; /* Ensure responsiveness */
-    height: 400px; /* Maintain the original height */
-    object-fit: cover; /* Ensure the image scales properly */
+    width: auto;
+    max-width: 100%;
+    height: 400px;
+    object-fit: cover;
 }
 
 .hero #dots1 {
@@ -326,12 +325,13 @@ main {
     font-size: 28px;
     font-weight: 500;
     position: relative;
+    margin-right: auto;
 }
 
 #projects-header h2::after {
     content: "";
     display: block;
-    width: 30vw;
+    width: calc(40vw - 80px);
     height: 2px;
     background-color: var(--primary-color);
     position: absolute;
@@ -341,7 +341,7 @@ main {
 }
 
 #projects-header a {
-    margin-left: auto;
+    /* margin-left: auto; */
     margin-right: 325px;
 }
 
@@ -556,7 +556,7 @@ footer aside {
     color: var(--secondary-color);
 }
 
-@media screen and (min-width: 769px) {
+@media screen and (min-width: 1201px) {
     #hamburger-menu {
         display: none;
     }
@@ -566,7 +566,7 @@ footer aside {
     }
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 1200px) {
     :root {
         --margin-right: 5vw;
         --margin-left: 5vw;
@@ -690,18 +690,19 @@ footer aside {
     }
 
     #projects-header h2::after {
-        width: 20vw;
+        width: calc(40vw - 110px);
     }
 
     #projects-header h2 {
         font-size: 28px;
         font-weight: 500;
         position: relative;
+        margin-right: auto;
     }
 
     #projects-header a {
-        margin-left: auto;
-        margin-right: 0;
+        /* margin-left: auto; */
+        margin-right: var(--margin-right);
     }
 
     #projects-header a::after {
@@ -710,10 +711,12 @@ footer aside {
 
     .project-list {
         display: flex;
-        flex-direction: column;
+        flex-wrap: wrap;
         align-items: center;
+        justify-content: center;
         margin-top: 20px;
         margin-right: 0;
+        gap: 20px;
     }
 
     .project-list .project-item {
@@ -727,8 +730,8 @@ footer aside {
     }
 
     .project-list .project-item img {
-        width: 100%;
-        height: 100%;
+        width: auto;
+        height: auto;
         object-fit: cover;
         border-radius: inherit;
     }
