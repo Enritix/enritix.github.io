@@ -1,11 +1,12 @@
 /* Mobile drawer navigation + Lottie burger icon */
 (function () {
-  const burger      = document.getElementById('burger');
-  const drawer      = document.getElementById('drawer');
-  const overlay     = document.getElementById('drawer-overlay');
+  const burger       = document.getElementById('burger');
+  const drawer       = document.getElementById('drawer');
+  const overlay      = document.getElementById('drawer-overlay');
   const lottiePlayer = document.getElementById('burger-lottie');
   let dotLottieInstance = null;
-  let drawerOpen = false;
+  let drawerOpen        = false;
+  let pendingMode       = null; // queued animation if instance not ready yet
 
   function setupDrawer() {
     gsap.set(drawer,  { xPercent: 100 });
@@ -15,24 +16,44 @@
 
   function initLottie() {
     if (!lottiePlayer) return;
+
     const tryGetInstance = () => {
       dotLottieInstance = lottiePlayer.dotLottie;
-      if (!dotLottieInstance) requestAnimationFrame(tryGetInstance);
+      if (!dotLottieInstance) {
+        requestAnimationFrame(tryGetInstance);
+        return;
+      }
+      // Instance ready — play any animation that was requested while loading
+      if (pendingMode) {
+        const mode = pendingMode;
+        pendingMode = null;
+        playLottie(mode);
+      }
     };
+
+    // Start polling immediately AND after the element type is defined
+    requestAnimationFrame(tryGetInstance);
     if (window.customElements) {
-      window.customElements.whenDefined('dotlottie-wc').then(tryGetInstance);
-    } else {
-      requestAnimationFrame(tryGetInstance);
+      window.customElements.whenDefined('dotlottie-wc').then(() => {
+        if (!dotLottieInstance) requestAnimationFrame(tryGetInstance);
+      });
     }
   }
 
   function playLottie(mode) {
+    // Last-chance grab before giving up
     if (!dotLottieInstance && lottiePlayer) dotLottieInstance = lottiePlayer.dotLottie;
-    if (!dotLottieInstance) return;
-    dotLottieInstance.setMode(mode);
-    dotLottieInstance.setSpeed(2.5);
-    if (typeof dotLottieInstance.setFrame === 'function') dotLottieInstance.setFrame(0);
-    dotLottieInstance.play();
+    if (!dotLottieInstance) {
+      pendingMode = mode; // remember for when the instance becomes ready
+      return;
+    }
+    pendingMode = null;
+    try {
+      dotLottieInstance.setMode(mode);
+      dotLottieInstance.setSpeed(2.5);
+      if (typeof dotLottieInstance.setFrame === 'function') dotLottieInstance.setFrame(0);
+      dotLottieInstance.play();
+    } catch (_) {}
   }
 
   function openDrawer() {
@@ -69,16 +90,18 @@
   setupDrawer();
   initLottie();
 
-  drawer.querySelectorAll('li a').forEach(el => {
-    el.addEventListener('mouseenter', () => {
-      gsap.to(el, { x: 6, duration: .2, ease: 'power2.out' });
-      const num = el.querySelector('.drawer-num');
-      if (num) gsap.to(num, { color: 'var(--accent)', duration: .2 });
+  if (window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
+    drawer.querySelectorAll('li a').forEach(el => {
+      el.addEventListener('mouseenter', () => {
+        gsap.to(el, { x: 6, duration: .2, ease: 'power2.out' });
+        const num = el.querySelector('.drawer-num');
+        if (num) gsap.to(num, { color: 'var(--accent)', duration: .2 });
+      });
+      el.addEventListener('mouseleave', () => {
+        gsap.to(el, { x: 0, duration: .22, ease: 'power2.inOut' });
+        const num = el.querySelector('.drawer-num');
+        if (num) gsap.to(num, { color: 'rgba(255,255,255,.14)', duration: .2 });
+      });
     });
-    el.addEventListener('mouseleave', () => {
-      gsap.to(el, { x: 0, duration: .22, ease: 'power2.inOut' });
-      const num = el.querySelector('.drawer-num');
-      if (num) gsap.to(num, { color: 'rgba(255,255,255,.14)', duration: .2 });
-    });
-  });
+  }
 })();

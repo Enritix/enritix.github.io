@@ -173,7 +173,7 @@ dotlottie-player { --lottie-fill-color: var(--accent); --lottie-stroke-color: va
   opacity: 1; pointer-events: none; will-change: transform;
 }
 .drawer-links { list-style: none; display: flex; flex-direction: column; gap: 0; flex: 1; }
-.drawer-links li { overflow: hidden; border-bottom: 1px solid var(--line); width: 100%; }
+.drawer-links li { border-bottom: 1px solid var(--line); width: 100%; }
 .drawer-links a {
   font-family: var(--serif); font-size: clamp(1.6rem, 5vw, 2rem); font-weight: 400;
   color: var(--muted); text-decoration: none; letter-spacing: -.01em;
@@ -182,8 +182,9 @@ dotlottie-player { --lottie-fill-color: var(--accent); --lottie-stroke-color: va
 }
 .drawer-links a:hover { color: var(--text); }
 .drawer-num {
-  font-family: var(--mono); font-size: .65rem; letter-spacing: .1em;
-  color: var(--line2); align-self: flex-start; margin-top: .3rem;
+  font-family: var(--serif); font-size: 3rem; letter-spacing: -.03em;
+  color: var(--line2); line-height: 1; align-self: center;
+  transition: color .2s;
 }
 .drawer-cta {
   margin-top: 2rem; font-family: var(--mono); font-size: .8rem; letter-spacing: .08em;
@@ -339,7 +340,7 @@ h1.hero-title em { color: var(--accent2); font-style: italic; }
 /* ─────────────────────────────────────────────────────────
    INDEX — SECTIONS SHARED
 ───────────────────────────────────────────────────────── */
-section { padding: 6rem 2.5rem; border-bottom: 1px solid var(--line); }
+section { padding: 6rem max(2.5rem, calc((100vw - 1200px) / 2)); border-bottom: 1px solid var(--line); }
 @media (max-width: 720px) { section { padding: 4rem 1.5rem; } }
 .section-label {
   font-family: var(--mono); font-size: .72rem; letter-spacing: .15em;
@@ -440,7 +441,7 @@ h2.section-title {
 .contact-link-label { font-family: var(--mono); font-size: .68rem; letter-spacing: .1em; color: var(--muted); text-transform: uppercase; margin-bottom: .15rem; }
 .contact-link-value { font-size: .9rem; }
 .contact-link-arrow { color: var(--muted); font-size: .8rem; transition: transform .2s; }
-.contact-link:hover .contact-link-arrow { transform: translateX(3px); }
+.contact-link:hover .contact-link-arrow { transform: translateX(3px); color: var(--accent) }
 .contact-form { display: flex; flex-direction: column; gap: 1rem; }
 .form-field { display: flex; flex-direction: column; gap: .4rem; }
 .form-field label { font-family: var(--mono); font-size: .7rem; letter-spacing: .1em; color: var(--muted); text-transform: uppercase; }
