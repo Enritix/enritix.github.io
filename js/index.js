@@ -139,30 +139,121 @@
   addUnderlineHover(document.querySelectorAll('.footer-right a'));
 
   /* ── Form ── */
-  document.querySelectorAll('.form-field input, .form-field textarea').forEach(el => {
-    el.addEventListener('focus', () => gsap.to(el, { borderColor: 'rgba(255,255,255,.35)', duration: .25 }));
-    el.addEventListener('blur',  () => gsap.to(el, { borderColor: 'rgba(255,255,255,.07)', duration: .25 }));
-  });
-  document.getElementById('send-btn').addEventListener('click', () => {
-    const n = document.getElementById('name').value.trim();
-    const e = document.getElementById('email').value.trim();
-    const m = document.getElementById('message').value.trim();
-    if (!n || !e || !m) {
-      gsap.timeline()
-        .to('#send-btn', { x:  7, duration: .07 })
-        .to('#send-btn', { x: -7, duration: .07 })
-        .to('#send-btn', { x:  5, duration: .07 })
-        .to('#send-btn', { x: -5, duration: .07 })
-        .to('#send-btn', { x:  0, duration: .06 });
-      return;
+  (function initForm() {
+    const form    = document.getElementById('contact-form');
+    const nameEl  = document.getElementById('name');
+    const emailEl = document.getElementById('email');
+    const msgEl   = document.getElementById('message');
+    const btn     = document.getElementById('send-btn');
+    const fb      = document.getElementById('form-feedback');
+    if (!form) return;
+
+    function setError(id, text) {
+      const input = document.getElementById(id);
+      input.closest('.form-field').classList.add('has-error');
+      document.getElementById('err-' + id).textContent = text;
+      gsap.to(input, { borderColor: '#f87171', duration: .2 });
     }
-    const btn = document.getElementById('send-btn');
-    btn.textContent = 'Sent ✓';
-    gsap.to(btn, { opacity: .6, scale: .97, duration: .3, ease: 'power2.out' });
-    const msg = document.getElementById('form-msg');
-    msg.style.display = 'block';
-    gsap.from(msg, { opacity: 0, y: 10, duration: .4, ease: 'power2.out' });
-  });
+
+    function clearError(id) {
+      const input = document.getElementById(id);
+      input.closest('.form-field').classList.remove('has-error');
+      document.getElementById('err-' + id).textContent = '';
+      gsap.to(input, { borderColor: 'rgba(255,255,255,.07)', duration: .2 });
+    }
+
+    function validate() {
+      let ok = true;
+      ['name', 'email', 'message'].forEach(clearError);
+      if (!nameEl.value.trim()) {
+        setError('name', 'Name is required.'); ok = false;
+      }
+      const email = emailEl.value.trim();
+      if (!email) {
+        setError('email', 'Email is required.'); ok = false;
+      } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        setError('email', 'Enter a valid email address.'); ok = false;
+      }
+      if (!msgEl.value.trim()) {
+        setError('message', 'Message is required.'); ok = false;
+      }
+      return ok;
+    }
+
+    function shake() {
+      gsap.timeline()
+        .to(btn, { x:  7, duration: .07 })
+        .to(btn, { x: -7, duration: .07 })
+        .to(btn, { x:  5, duration: .07 })
+        .to(btn, { x: -5, duration: .07 })
+        .to(btn, { x:  0, duration: .06 });
+    }
+
+    function setFeedback(type, text) {
+      fb.className = 'form-feedback is-' + type;
+      fb.textContent = text;
+      fb.style.display = 'block';
+      gsap.from(fb, { opacity: 0, y: 8, duration: .35, ease: 'power2.out' });
+    }
+
+    function setBusy(busy) {
+      btn.disabled = busy;
+      btn.textContent = busy ? 'Sending…' : 'Send message';
+      gsap.to(btn, { opacity: busy ? .6 : 1, duration: .2 });
+    }
+
+    // Focus / blur border colour
+    [nameEl, emailEl, msgEl].forEach(el => {
+      el.addEventListener('focus', () => gsap.to(el, { borderColor: 'rgba(255,255,255,.35)', duration: .25 }));
+      el.addEventListener('blur', () => {
+        if (!el.closest('.form-field').classList.contains('has-error'))
+          gsap.to(el, { borderColor: 'rgba(255,255,255,.07)', duration: .25 });
+      });
+      // Clear error as soon as user starts correcting
+      el.addEventListener('input', () => {
+        if (el.closest('.form-field').classList.contains('has-error'))
+          clearError(el.id);
+      });
+    });
+
+    form.addEventListener('submit', async e => {
+      e.preventDefault();
+      fb.style.display = 'none';
+
+      if (!validate()) { shake(); return; }
+
+      setBusy(true);
+      try {
+        const res = await fetch('/api/contact', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            name:    nameEl.value.trim(),
+            email:   emailEl.value.trim(),
+            message: msgEl.value.trim()
+          })
+        });
+
+        if (!res.ok) {
+          const data = await res.json().catch(() => ({}));
+          throw new Error(data.message || 'Server error. Please try again.');
+        }
+
+        btn.textContent = 'Sent ✓';
+        gsap.to(btn, { opacity: .6, scale: .96, duration: .3, ease: 'power2.out' });
+        setFeedback('success', '✓ Message sent — I\'ll get back to you soon.');
+        form.reset();
+      } catch (err) {
+        setBusy(false);
+        setFeedback('error',
+          err.message === 'Failed to fetch'
+            ? 'Network error — check your connection and try again.'
+            : err.message || 'Something went wrong. Please try again.'
+        );
+        shake();
+      }
+    });
+  })();
 
   /* ── Scroll spy ── */
   const allSections = document.querySelectorAll('section[id]');

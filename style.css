@@ -453,6 +453,18 @@ h2.section-title {
 .form-field input:focus, .form-field textarea:focus { border-color: var(--line2); }
 .form-field input::placeholder, .form-field textarea::placeholder { color: var(--muted); }
 .form-submit { align-self: flex-start; }
+.form-error {
+  font-family: var(--mono); font-size: .68rem; letter-spacing: .04em;
+  color: #f87171; display: none; margin-top: .3rem;
+}
+.form-field.has-error .form-error { display: block; }
+.form-field.has-error input,
+.form-field.has-error textarea { border-color: #f87171 !important; }
+.form-feedback {
+  font-family: var(--mono); font-size: .75rem; display: none;
+}
+.form-feedback.is-success { color: var(--accent); }
+.form-feedback.is-error   { color: #f87171; }
 
 /* ─────────────────────────────────────────────────────────
    SHARED — PROJECT CARDS (index + projects page)

@@ -355,22 +355,25 @@
         </a>
       </div>
     </div>
-    <div class="contact-form">
+    <form class="contact-form" id="contact-form" novalidate>
       <div class="form-field">
         <label for="name">Name</label>
         <input type="text" id="name" name="name" placeholder="Your name" autocomplete="name">
+        <span class="form-error" id="err-name"></span>
       </div>
       <div class="form-field">
         <label for="email">Email</label>
         <input type="email" id="email" name="email" placeholder="your@email.com" autocomplete="email">
+        <span class="form-error" id="err-email"></span>
       </div>
       <div class="form-field">
         <label for="message">Message</label>
         <textarea id="message" name="message" rows="5" placeholder="Tell me about your project..."></textarea>
+        <span class="form-error" id="err-message"></span>
       </div>
-      <button type="button" class="btn-primary form-submit" id="send-btn">Send message</button>
-      <p id="form-msg" style="font-family:'DM Mono',monospace;font-size:.75rem;color:var(--accent);display:none">✓ Message sent — I'll get back to you soon.</p>
-    </div>
+      <button type="submit" class="btn-primary form-submit" id="send-btn">Send message</button>
+      <p class="form-feedback" id="form-feedback"></p>
+    </form>
   </div>
 </section>
 
