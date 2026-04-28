@@ -7,7 +7,7 @@
   let activeFilter = 'all';
 
   /* ── Page entrance animations ── */
-  gsap.from('nav', { y: -20, opacity: 0, duration: .6, ease: 'power3.out', delay: .1 });
+  gsap.from('nav:not(.drawer)', { y: -20, opacity: 0, duration: .6, ease: 'power3.out', delay: .1 });
   gsap.timeline({ defaults: { ease: 'power3.out' }, delay: .25 })
     .fromTo('.section-label', { opacity: 0, x: -20 }, { opacity: 1, x: 0, duration: .5 })
     .fromTo('.page-title',    { opacity: 0, y: 28  }, { opacity: 1, y: 0, duration: .65 }, '-=.25');

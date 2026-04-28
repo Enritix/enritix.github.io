@@ -14,7 +14,7 @@
   }
 
   /* ── Nav entrance ── */
-  gsap.from('nav', { y: -20, opacity: 0, duration: .6, ease: 'power3.out', delay: .1 });
+  gsap.from('nav:not(.drawer)', { y: -20, opacity: 0, duration: .6, ease: 'power3.out', delay: .1 });
 
   /* ── Hero entrance ── */
   const titleWords = wrapWords(document.querySelector('.hero-title'));
