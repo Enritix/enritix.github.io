@@ -26,40 +26,70 @@
   }
 
   /* ── Build a project card ── */
-  function buildCard(p) {
-    const card = document.createElement('div');
-    card.className = 'project-card';
-    card.dataset.type = p.type;
-    card.setAttribute('role', 'article');
-    card.setAttribute('tabindex', '0');
-    card.style.opacity = '0';
-    card.innerHTML = `
-      <div class="project-img">
-        <div class="project-img-placeholder" style="background:${p.gradient};width:100%;height:100%">
-          <span style="font-family:'DM Serif Display',serif;font-size:1.4rem;letter-spacing:-.02em;color:${p.accent}">${p.title}</span>
-          <span style="font-family:'DM Mono',monospace;font-size:.7rem;color:#8a8880">${p.type}</span>
-        </div>
+function buildCard(p) {
+  const card = document.createElement('div');
+  card.className = 'project-card';
+  card.dataset.type = p.type;
+  card.setAttribute('role', 'article');
+  card.setAttribute('tabindex', '0');
+  card.style.opacity = '0';
+
+  // gebruik main product image of fallback
+  const imgSrc =
+    p.mainImage ||
+    p.image ||
+    (p.images && p.images.length ? p.images[0] : '');
+
+  card.innerHTML = `
+    <div class="project-img">
+      ${
+        imgSrc
+          ? `
+        <img src="${imgSrc}" alt="${p.title}" class="project-card-image">
+        <div class="project-img-overlay"></div>
+      `
+          : `
+        <div class="project-img-overlay fallback"></div>
+      `
+      }
+    </div>
+
+    <div class="project-body">
+      <div class="project-meta">
+        <div class="project-tags">${p.tags.map(t => `<span class="tag">${t}</span>`).join('')}</div>
+        <span class="project-year">${p.year}</span>
       </div>
-      <div class="project-body">
-        <div class="project-meta">
-          <div class="project-tags">${p.tags.map(t => `<span class="tag">${t}</span>`).join('')}</div>
-          <span class="project-year">${p.year}</span>
-        </div>
-        <div class="project-title">${p.title}</div>
-        <div class="project-desc">${p.summary}</div>
-        <button class="project-link" data-id="${p.id}">View project →</button>
-      </div>`;
 
-    card.addEventListener('mouseenter', () => gsap.to(card, { y: -5, scale: 1.01, duration: .22, ease: 'power2.out' }));
-    card.addEventListener('mouseleave', () => gsap.to(card, { y:  0, scale: 1,    duration: .28, ease: 'power2.inOut' }));
-    card.addEventListener('click', () => navigate(p.id));
-    card.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') navigate(p.id); });
+      <div class="project-title">${p.title}</div>
+      <div class="project-desc">${p.summary}</div>
 
-    const linkBtn = card.querySelector('.project-link');
-    linkBtn.addEventListener('click', e => { e.stopPropagation(); navigate(p.id); });
-    setTimeout(() => addArrowHover([linkBtn]), 0);
-    return card;
-  }
+      <button class="project-link" data-id="${p.id}">View project →</button>
+    </div>
+  `;
+
+  card.addEventListener('mouseenter', () =>
+    gsap.to(card, { y: -5, scale: 1.01, duration: .22, ease: 'power2.out' })
+  );
+
+  card.addEventListener('mouseleave', () =>
+    gsap.to(card, { y: 0, scale: 1, duration: .28, ease: 'power2.inOut' })
+  );
+
+  card.addEventListener('click', () => navigate(p.id));
+  card.addEventListener('keydown', e => {
+    if (e.key === 'Enter' || e.key === ' ') navigate(p.id);
+  });
+
+  const linkBtn = card.querySelector('.project-link');
+  linkBtn.addEventListener('click', e => {
+    e.stopPropagation();
+    navigate(p.id);
+  });
+
+  setTimeout(() => addArrowHover([linkBtn]), 0);
+
+  return card;
+}
 
   function navigate(id) { window.location.href = `/project/${id}`; }
 
