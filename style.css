@@ -111,7 +111,7 @@ body::after {
 nav {
   position: fixed; top: 0; left: 0; right: 0; z-index: 200;
   display: flex; align-items: center; justify-content: space-between;
-  padding: 1.25rem 2.5rem;
+  padding: calc(1.25rem + env(safe-area-inset-top)) 2.5rem 1.25rem;
   background: rgba(12,12,11,0.85);
   backdrop-filter: blur(12px);
   border-bottom: 1px solid var(--line);
@@ -249,6 +249,7 @@ footer {
 ───────────────────────────────────────────────────────── */
 #home {
   min-height: 100vh; display: flex; flex-direction: column; justify-content: flex-end;
+  padding-top: calc(7rem + env(safe-area-inset-top));
   padding: 7rem 2.5rem 4rem;
   position: relative; overflow: hidden;
   border-bottom: 1px solid var(--line);
