@@ -86,24 +86,138 @@ export default async function handler(req, res) {
         subject: `Nieuw bericht van ${name}`,
         reply_to: email,
         html: `
-        <div style="font-family:Arial,sans-serif;padding:30px;background:#f8f8f8;">
-          <div style="max-width:600px;margin:auto;background:white;border-radius:12px;padding:30px;">
-            <h2 style="margin-top:0;">Nieuw contactbericht</h2>
+        <div style="
+        background:#0c0c0b;
+        padding:50px 20px;
+        font-family:Arial,sans-serif;
+        color:#f0ede6;
+        ">
 
-            <p><strong>Naam:</strong><br>${name}</p>
+        <div style="
+        max-width:640px;
+        margin:auto;
+        background:#131312;
+        border:1px solid rgba(255,255,255,0.07);
+        padding:40px;
+        ">
 
-            <p><strong>Email:</strong><br>${email}</p>
+        <p style="
+        font-size:11px;
+        letter-spacing:3px;
+        text-transform:uppercase;
+        color:#c8f060;
+        margin:0 0 18px;
+        font-family:monospace;
+        ">
+        New Inquiry
+        </p>
 
-            <p><strong>Bericht:</strong><br>
-            ${message.replace(/\n/g, "<br>")}
-            </p>
+        <h1 style="
+        margin:0 0 30px;
+        font-size:42px;
+        line-height:1.05;
+        font-weight:400;
+        color:#f0ede6;
+        font-family:Georgia,serif;
+        ">
+        Someone contacted <span style="color:#e8d5a3;">Enritix</span>
+        </h1>
 
-            <hr style="margin:25px 0;">
+        <div style="
+        border-top:1px solid rgba(255,255,255,0.07);
+        padding-top:24px;
+        margin-bottom:24px;
+        ">
 
-            <p style="font-size:12px;color:#666;">
-              Verzonden via je portfolio website.
-            </p>
-          </div>
+        <p style="
+        font-size:11px;
+        letter-spacing:2px;
+        text-transform:uppercase;
+        color:#8a8880;
+        margin:0 0 8px;
+        font-family:monospace;
+        ">
+        Name
+        </p>
+
+        <p style="
+        font-size:20px;
+        margin:0;
+        color:#f0ede6;
+        ">
+        ${name}
+        </p>
+
+        </div>
+
+        <div style="
+        border-top:1px solid rgba(255,255,255,0.07);
+        padding-top:24px;
+        margin-bottom:24px;
+        ">
+
+        <p style="
+        font-size:11px;
+        letter-spacing:2px;
+        text-transform:uppercase;
+        color:#8a8880;
+        margin:0 0 8px;
+        font-family:monospace;
+        ">
+        Email
+        </p>
+
+        <p style="
+        font-size:18px;
+        margin:0;
+        color:#f0ede6;
+        ">
+        ${email}
+        </p>
+
+        </div>
+
+        <div style="
+        border-top:1px solid rgba(255,255,255,0.07);
+        padding-top:24px;
+        ">
+
+        <p style="
+        font-size:11px;
+        letter-spacing:2px;
+        text-transform:uppercase;
+        color:#8a8880;
+        margin:0 0 10px;
+        font-family:monospace;
+        ">
+        Message
+        </p>
+
+        <p style="
+        font-size:16px;
+        line-height:1.8;
+        margin:0;
+        color:#f0ede6;
+        white-space:pre-line;
+        ">
+        ${message}
+        </p>
+
+        </div>
+
+        <div style="
+        margin-top:34px;
+        padding-top:20px;
+        border-top:1px solid rgba(255,255,255,0.07);
+        font-size:12px;
+        color:#8a8880;
+        font-family:monospace;
+        letter-spacing:1px;
+        ">
+        Sent from enritix.vercel.app
+        </div>
+
+        </div>
         </div>
         `
       })
