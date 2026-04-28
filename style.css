@@ -28,7 +28,7 @@ body {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
-  padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+  padding: 0;
 }
 @media (prefers-reduced-motion: reduce) {
   * { animation-duration: .01ms !important; transition-duration: .01ms !important; }
@@ -158,7 +158,13 @@ dotlottie-player { --lottie-fill-color: var(--accent); --lottie-stroke-color: va
   nav { padding: 1rem 1.5rem; }
   .nav-links, .nav-cta-wrap { display: none; }
   .nav-back { display: none; }
-  .nav-burger { display: flex; }
+  .nav-burger {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 }
 
 /* ─────────────────────────────────────────────────────────

@@ -14,8 +14,18 @@
     drawer.style.pointerEvents = 'none';
   }
 
+  function forceLottieFix() {
+  requestAnimationFrame(() => {
+    if (lottiePlayer) {
+      lottiePlayer.style.transform = 'translateZ(0)';
+    }
+  });
+}
+
   function initLottie() {
     if (!lottiePlayer) return;
+
+    forceLottieFix();
 
     const tryGetInstance = () => {
       dotLottieInstance = lottiePlayer.dotLottie;
