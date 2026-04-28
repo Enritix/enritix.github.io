@@ -2,8 +2,8 @@
 (function () {
   gsap.registerPlugin(ScrollTrigger);
 
-  const params    = new URLSearchParams(window.location.search);
-  const id        = params.get('id');
+  const pathParts = window.location.pathname.split('/');
+  const id = pathParts[pathParts.length - 1];
   const skeleton  = document.getElementById('skeleton');
   const errorState = document.getElementById('error-state');
   const content   = document.getElementById('content');
@@ -65,7 +65,7 @@
     const relatedGrid = document.getElementById('related-grid');
     related.forEach(p => {
       const a = document.createElement('a');
-      a.className = 'related-card'; a.href = `project.html?id=${p.id}`;
+      a.className = 'related-card'; a.href = `/project/${p.id}`;
       a.innerHTML = `<div class="related-card-type">${p.type} · ${p.year}</div>
         <div class="related-card-title">${p.title}</div>
         <div class="related-card-arrow">View →</div>`;

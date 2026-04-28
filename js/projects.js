@@ -61,7 +61,7 @@
     return card;
   }
 
-  function navigate(id) { window.location.href = `project.html?id=${id}`; }
+  function navigate(id) { window.location.href = `/project/${id}`; }
 
   /* ── Build filter buttons ── */
   function buildFilters(projects) {
