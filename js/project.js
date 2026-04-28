@@ -72,6 +72,8 @@
       relatedGrid.appendChild(a);
     });
 
+    initGallery(project.images);
+
     gsap.to(skeleton, {
       opacity: 0, duration: .3, ease: 'power2.in',
       onComplete: () => {
@@ -80,6 +82,180 @@
         initAnimations();
       }
     });
+  }
+
+  /* ── Gallery (hero image + thumbnail strip + fullscreen modal) ── */
+  function initGallery(images) {
+    if (!images || images.length === 0) return;
+
+    /* ── 1. Main hero image ── */
+    const heroImg     = document.getElementById('hero-main-img');
+    const heroOverlay = document.getElementById('hero-overlay');
+    if (heroImg) {
+      heroImg.src   = images[0];
+      heroImg.alt   = 'Project screenshot';
+      heroImg.style.display = 'block';
+    }
+    if (heroOverlay) heroOverlay.style.display = 'block';
+
+    /* ── 2. Thumbnail strip (max 4 visible) ── */
+    const thumbsWrap = document.getElementById('hero-thumbs');
+    if (thumbsWrap && images.length > 1) {
+      const MAX_THUMBS = 4;
+      const visible    = images.slice(0, MAX_THUMBS);
+
+      visible.forEach((src, i) => {
+        const isLast = i === visible.length - 1;
+        const btn    = document.createElement('button');
+        btn.className = 'hero-thumb' + (isLast ? ' is-gallery-btn' : '');
+        btn.setAttribute('aria-label', isLast ? 'Open gallery' : `View screenshot ${i + 1}`);
+
+        const img = new Image();
+        img.src     = src;
+        img.loading = 'lazy';
+        img.draggable = false;
+        btn.appendChild(img);
+
+        /* overlay */
+        const overlay = document.createElement('span');
+        overlay.className = 'hero-thumb-overlay';
+        overlay.innerHTML = `
+          <svg class="hero-thumb-overlay-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+            <path stroke-linecap="round" stroke-linejoin="round"
+              d="M3.75 3.75v4.5m0-4.5h4.5m-4.5 0L9 9M3.75 20.25v-4.5m0 4.5h4.5m-4.5 0L9 15M20.25 3.75h-4.5m4.5 0v4.5m0-4.5L15 9m5.25 11.25h-4.5m4.5 0v-4.5m0 4.5L15 15"/>
+          </svg>
+          <span class="hero-thumb-overlay-label">Open Gallery</span>`;
+        btn.appendChild(overlay);
+
+        btn.addEventListener('click', () => openModal(i));
+        thumbsWrap.appendChild(btn);
+      });
+
+      thumbsWrap.style.display = 'flex';
+    }
+
+    /* ── 3. Gallery modal (appended to body) ── */
+    let current  = 0;
+    let isOpen   = false;
+    let kbBound  = false;
+
+    const modal = document.createElement('div');
+    modal.id        = 'gallery-modal';
+    modal.className = 'gallery-modal';
+    modal.setAttribute('aria-modal', 'true');
+    modal.setAttribute('role', 'dialog');
+    modal.innerHTML = `
+      <button class="gallery-close" id="gallery-close" aria-label="Close gallery">
+        <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
+        </svg>
+      </button>
+      <div class="gallery-stage">
+        <div class="gallery-img-wrap" id="gallery-img-wrap">
+          <img id="gallery-img" alt="" draggable="false">
+        </div>
+      </div>
+      <button class="gallery-nav gallery-prev" id="gallery-prev" aria-label="Previous image">
+        <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/>
+        </svg>
+      </button>
+      <button class="gallery-nav gallery-next" id="gallery-next" aria-label="Next image">
+        <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/>
+        </svg>
+      </button>
+      <div class="gallery-counter" id="gallery-counter"></div>`;
+    document.body.appendChild(modal);
+
+    const galleryImg = modal.querySelector('#gallery-img');
+    const counter    = modal.querySelector('#gallery-counter');
+
+    function updateCounter() {
+      if (counter) counter.textContent = `${current + 1} / ${images.length}`;
+    }
+
+    function goTo(index) {
+      current = (index + images.length) % images.length;
+      gsap.to(galleryImg, {
+        opacity: 0, x: index > current ? -20 : 20, duration: .18, ease: 'power2.in',
+        onComplete: () => {
+          galleryImg.src = images[current];
+          gsap.fromTo(galleryImg,
+            { opacity: 0, x: index > current ? 20 : -20 },
+            { opacity: 1, x: 0, duration: .28, ease: 'power2.out' });
+        }
+      });
+      updateCounter();
+    }
+
+    function openModal(startIndex = 0) {
+      current = startIndex;
+      galleryImg.src = images[current];
+      updateCounter();
+      document.body.style.overflow = 'hidden';
+      isOpen = true;
+      modal.classList.add('is-open');
+      gsap.to(modal, { opacity: 1, duration: .3, ease: 'power2.out' });
+
+      if (!kbBound) {
+        document.addEventListener('keydown', onKey);
+        kbBound = true;
+      }
+    }
+
+    function closeModal() {
+      isOpen = false;
+      gsap.to(modal, {
+        opacity: 0, duration: .25, ease: 'power2.in',
+        onComplete: () => {
+          modal.classList.remove('is-open');
+          document.body.style.overflow = '';
+        }
+      });
+    }
+
+    function onKey(e) {
+      if (!isOpen) return;
+      if (e.key === 'Escape')     closeModal();
+      if (e.key === 'ArrowLeft')  goTo(current - 1);
+      if (e.key === 'ArrowRight') goTo(current + 1);
+    }
+
+    modal.querySelector('#gallery-close').addEventListener('click', closeModal);
+    modal.querySelector('#gallery-prev').addEventListener('click', () => goTo(current - 1));
+    modal.querySelector('#gallery-next').addEventListener('click', () => goTo(current + 1));
+
+    /* Click backdrop (outside image) to close */
+    modal.addEventListener('click', e => {
+      if (e.target === modal || e.target.classList.contains('gallery-stage'))
+        closeModal();
+    });
+
+    /* Touch swipe in modal */
+    let touchStartX = 0;
+    modal.addEventListener('touchstart', e => { touchStartX = e.touches[0].clientX; }, { passive: true });
+    modal.addEventListener('touchend', e => {
+      const diff = touchStartX - e.changedTouches[0].clientX;
+      if (Math.abs(diff) > 50) diff > 0 ? goTo(current + 1) : goTo(current - 1);
+    }, { passive: true });
+
+    /* Hide prev/next when only 1 image */
+    if (images.length === 1) {
+      modal.querySelector('#gallery-prev').style.display = 'none';
+      modal.querySelector('#gallery-next').style.display = 'none';
+      if (counter) counter.style.display = 'none';
+    }
+
+    /* Clicking anywhere in the hero (outside text/buttons/thumbs) opens gallery */
+    const heroEl = document.getElementById('project-hero');
+    if (heroEl) {
+      heroEl.style.cursor = 'pointer';
+      heroEl.addEventListener('click', e => {
+        if (!e.target.closest('a, button, .hero-thumbs, .project-hero-content'))
+          openModal(0);
+      });
+    }
   }
 
   /* ── Page animations (called after content renders) ── */

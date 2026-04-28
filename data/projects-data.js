@@ -1,4 +1,4 @@
-const PROJECTS = [
+﻿const PROJECTS = [
   {
     id: "oxford-bikes",
     title: "Oxford Bikes",
@@ -8,6 +8,11 @@ const PROJECTS = [
     accent: "#7CFF6B",
     gradient: "linear-gradient(135deg,#141a14 0%,#1f2a1f 100%)",
     tags: ["Shopify", "Liquid", "B2B", "CSS"],
+    images: [
+      "/assets/images/placeholder-image.png",
+      "/assets/images/placeholder-image.png",
+      "/assets/images/placeholder-image.png"
+    ],
     summary: "Two interconnected Shopify experiences: brand site and B2B wholesale platform.",
     description: [
       "Oxford Bikes required both a public-facing brand presence and a fully functional B2B wholesale environment. The challenge was to design two interconnected Shopify experiences that shared a consistent visual identity while serving completely different user flows and business logic.",
@@ -30,6 +35,10 @@ const PROJECTS = [
     accent: "#FF5C7A",
     gradient: "linear-gradient(135deg,#1a0c10 0%,#2a1418 100%)",
     tags: ["Webflow", "UI Design"],
+    images: [
+      "/assets/images/placeholder-image.png",
+      "/assets/images/placeholder-image.png"
+    ],
     summary: "Custom Webflow business website built from scratch.",
     description: [
       "Zannata was developed as a fully custom Webflow build, created from scratch without relying on templates. The goal was to translate brand identity into a digital experience with a strong focus on typography, spacing and visual hierarchy.",
@@ -51,6 +60,10 @@ const PROJECTS = [
     accent: "#FFD36E",
     gradient: "linear-gradient(135deg,#1a1408 0%,#2a1f10 100%)",
     tags: ["Express.js", "TypeScript", "Supabase", "MongoDB"],
+    images: [
+      "/assets/images/placeholder-image.png",
+      "/assets/images/placeholder-image.png"
+    ],
     summary: "Full-stack application with hybrid database architecture.",
     description: [
       "LegoLads is a full-stack web application built with Express.js and TypeScript, developed as part of an academic project. The system uses a hybrid database architecture combining Supabase (PostgreSQL) for structured relational data and MongoDB for more flexible document-based storage.",
@@ -72,6 +85,10 @@ const PROJECTS = [
     accent: "#FF4FA3",
     gradient: "linear-gradient(135deg,#120812 0%,#1f0f1a 100%)",
     tags: ["HTML", "CSS", "JavaScript", "SoundCloud API"],
+    images: [
+      "/assets/images/placeholder-image.png",
+      "/assets/images/placeholder-image.png"
+    ],
     summary: "Daily music guessing game using SoundCloud embeds.",
     description: [
       "ReCuedle is a browser-based daily song guessing game built entirely with vanilla HTML, CSS and JavaScript. Each day, players are presented with a new track embedded via SoundCloud and must identify the correct song based on short audio previews.",
@@ -93,6 +110,10 @@ const PROJECTS = [
     accent: "#A88CFF",
     gradient: "linear-gradient(135deg,#0f0b1a 0%,#1a1425 100%)",
     tags: ["Leaflet.js", "Webflow", "JavaScript"],
+    images: [
+      "/assets/images/placeholder-image.png",
+      "/assets/images/placeholder-image.png"
+    ],
     summary: "Interactive Minecraft world map using custom tiles.",
     description: [
       "ArdaCraft is a large-scale Minecraft project recreating Middle-earth at a 1:58 scale. This interactive map was built to allow players and visitors to explore the world visually and navigate between key locations.",
@@ -114,6 +135,10 @@ const PROJECTS = [
     accent: "#FFFFFF",
     gradient: "linear-gradient(135deg,#0a0a0a 0%,#141414 100%)",
     tags: ["HTML", "CSS", "JavaScript"],
+    images: [
+      "/assets/images/placeholder-image.png",
+      "/assets/images/placeholder-image.png"
+    ],
     summary: "Minimal hand-coded portfolio with zero dependencies.",
     description: [
       "This portfolio is a deliberately hand-coded project built without frameworks, build tools or external dependencies. The objective was to demonstrate that modern, high-quality web experiences can be achieved with minimal technology.",
@@ -135,6 +160,10 @@ const PROJECTS = [
     accent: "#4DFF88",
     gradient: "linear-gradient(135deg,#0f1a12 0%,#16261a 100%)",
     tags: ["HTML", "CSS", "JavaScript"],
+    images: [
+      "/assets/images/placeholder-image.png",
+      "/assets/images/placeholder-image.png"
+    ],
     summary: "Fitness webshop focused on usability and conversion.",
     description: [
       "Attivo is a fitness equipment webshop developed as an academic project, focusing on product presentation, usability and conversion-oriented design.",
@@ -154,6 +183,10 @@ const PROJECTS = [
     accent: "#8FB7FF",
     gradient: "linear-gradient(135deg,#0b1620 0%,#162436 100%)",
     tags: ["Webshop", "HTML", "CSS", "JavaScript"],
+    images: [
+      "/assets/images/placeholder-image.png",
+      "/assets/images/placeholder-image.png"
+    ],
     summary: "Parts webshop platform with structured catalog browsing.",
     description: [
       "VDBParts is a structured webshop platform focused on automotive and parts-related product listings.",
@@ -173,6 +206,10 @@ const PROJECTS = [
     accent: "#6F7CFF",
     gradient: "linear-gradient(135deg,#0b1020 0%,#151c2f 100%)",
     tags: ["HTML", "CSS", "JavaScript"],
+    images: [
+      "/assets/images/placeholder-image.png",
+      "/assets/images/placeholder-image.png"
+    ],
     summary: "Gaming website platform built for structured game content.",
     description: [
       "Vapormoon Games is a structured gaming website developed as part of an academic project.",
@@ -192,6 +229,10 @@ const PROJECTS = [
     accent: "#FF4D6D",
     gradient: "linear-gradient(135deg,#1a0f10 0%,#2a1418 100%)",
     tags: ["React", "Vite", "shadcn/ui", "Dashboard", "REST API"],
+    images: [
+      "/assets/images/placeholder-image.png",
+      "/assets/images/placeholder-image.png"
+    ],
     summary: "Dashboard for managing medical kits, users and analytics.",
     description: [
       "Medikits is a full-featured dashboard platform built with React (Vite) and shadcn/ui, designed to manage medical kits, their contents, and operational data across multiple user roles.",
