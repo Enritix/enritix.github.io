@@ -120,7 +120,7 @@ export default async function handler(req, res) {
         color:#f0ede6;
         font-family:Georgia,serif;
         ">
-        Someone contacted <span style="color:#e8d5a3;">Enritix</span>
+        Someone contacted you, <span style="color:#e8d5a3;">Enrico</span>
         </h1>
 
         <div style="

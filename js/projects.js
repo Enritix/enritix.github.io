@@ -5,6 +5,8 @@
   const grid       = document.getElementById('grid');
   const filtersBar = document.getElementById('filters-bar');
   let activeFilter = 'all';
+  let soonCard = null;
+  let resizeObserver = null;
 
   /* ── Page entrance animations ── */
   gsap.from('nav:not(.drawer)', { y: -20, opacity: 0, duration: .6, ease: 'power3.out', delay: .1 });
@@ -84,17 +86,27 @@
 
   /* ── Filter the grid ── */
   function applyFilter() {
+  gsap.globalTimeline.timeScale(1);
+
+  requestAnimationFrame(() => {
     document.querySelectorAll('.project-card').forEach(card => {
       const match = activeFilter === 'all' || card.dataset.type === activeFilter;
+
       if (match) {
         card.classList.remove('hidden');
-        gsap.to(card, { opacity: 1, y: 0, duration: .3, ease: 'power2.out' });
+        gsap.fromTo(card,
+          { opacity: 0, y: 8 },
+          { opacity: 1, y: 0, duration: .25 }
+        );
       } else {
-        gsap.to(card, { opacity: 0, y: 8, duration: .2, ease: 'power2.in',
-          onComplete: () => card.classList.add('hidden') });
+        gsap.set(card, { opacity: 0, y: 8 });
+        card.classList.add('hidden');
       }
     });
-  }
+
+    updateSoonCardLayout(grid, getVisibleCardsCount());
+  });
+}
 
   /* ── Load and render projects ── */
   function loadProjects() {
@@ -112,6 +124,50 @@
         { opacity: 1, y: 0, duration: .55, delay: (i % 3) * .09, ease: 'power3.out',
           scrollTrigger: { trigger: card, start: 'top 92%', once: true } });
     });
+
+    /* ── Coming soon placeholder ── */
+    function updateSoonCardLayout(grid, itemsCount) {
+  if (!soonCard) return;
+
+  const cols = window.getComputedStyle(grid)
+    .getPropertyValue('grid-template-columns')
+    .split(' ').length;
+
+  const remainder = itemsCount % cols;
+
+  if (remainder === 0) {
+    soonCard.style.gridColumn = '1 / -1';
+  } else {
+    soonCard.style.gridColumn = `span ${cols - remainder}`;
+  }
+}
+
+function getVisibleCardsCount() {
+  return document.querySelectorAll('.project-card:not(.hidden)').length;
+}
+
+    soonCard = document.createElement('div');
+soonCard.className = 'card-soon';
+soonCard.innerHTML = `
+  <div class="card-soon-inner">
+    <span class="card-soon-dot"></span>
+    <span class="card-soon-title">More coming soon</span>
+    <p class="card-soon-sub">New projects are currently in the works.</p>
+  </div>`;
+
+grid.appendChild(soonCard);
+
+updateSoonCardLayout(grid, getVisibleCardsCount());
+
+resizeObserver = new ResizeObserver(() => {
+  updateSoonCardLayout(grid, getVisibleCardsCount());
+});
+resizeObserver.observe(grid);
+
+gsap.fromTo(soon, { opacity: 0, y: 32 },
+  { opacity: 1, y: 0, duration: .55, delay: (projects.length % 3) * .09,
+    ease: 'power3.out', scrollTrigger: { trigger: soon, start: 'top 92%', once: true } });
+
     addUnderlineHover(document.querySelectorAll('.nav-links a'));
     addUnderlineHover(document.querySelectorAll('.footer-right a'));
     addPrimaryHover(document.querySelectorAll('.nav-cta'));
