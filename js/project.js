@@ -22,7 +22,7 @@
 
   function fetchRelated(projectId) {
     return new Promise(resolve => {
-      setTimeout(() => resolve(PROJECTS.filter(p => p.id !== projectId).slice(0, 3)), 0);
+      setTimeout(() => resolve(PROJECTS.filter(p => p.id !== projectId).slice(0, 4)), 0);
     });
   }
 
