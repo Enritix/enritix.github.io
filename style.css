@@ -141,16 +141,53 @@ nav {
   display: flex; align-items: center; gap: .4rem; transition: color .2s;
 }
 .nav-back:hover { color: var(--text); }
-.nav-burger {
-  display: none;
-  width: 40px; height: 40px;
-  cursor: pointer; background: none; border: none; padding: 0;
-  position: relative; z-index: 210; align-items: center; justify-content: center;
-  color: var(--accent);
-  overflow: hidden;
+.nav-burger{
+  display:none;
+  width:40px;
+  height:40px;
+  cursor:pointer;
+  background:none;
+  border:none;
+  padding:0;
+  position:relative;
+  z-index:210;
+  align-items:center;
+  justify-content:center;
+  color:var(--accent);
+  overflow:hidden;
 }
 .nav-burger svg path { fill: var(--accent); }
-.nav-burger #burger-lottie { fill: var(--accent); }
+.nav-burger #burger-lottie{
+  width:40px !important;
+  height:40px !important;
+  display:block;
+  opacity:0;
+  position:relative;
+  z-index:2;
+}
+
+.nav-burger::before{
+  content:'';
+  position:absolute;
+  inset:0;
+  z-index:3;
+  pointer-events:none;
+
+  background:
+    linear-gradient(var(--accent),var(--accent)) center 14px / 17px 2px no-repeat,
+    linear-gradient(var(--accent),var(--accent)) center 19px / 17px 2px no-repeat,
+    linear-gradient(var(--accent),var(--accent)) center 24px / 17px 2px no-repeat;
+
+  border-radius:40%;
+}
+
+.nav-burger.is-ready #burger-lottie{
+  opacity:1;
+}
+/* Zodra lottie ready = fallback weg */
+.nav-burger.is-ready::before{
+  display:none;
+}
 dotlottie-player { --lottie-fill-color: var(--accent); --lottie-stroke-color: var(--accent); }
 #animation-container #animation svg { fill: var(--accent) !important; }
 .nav-burger canvas { display: block; width: 40px !important; height: 40px !important; }
@@ -259,6 +296,11 @@ footer {
   padding: 7rem 2.5rem 4rem;
   position: relative; overflow: hidden;
   border-bottom: 1px solid var(--line);
+}
+.hero,
+.hero-inner,
+.hero-content {
+  overflow: hidden;
 }
 .hero-grid {
   position: absolute; inset: 0;

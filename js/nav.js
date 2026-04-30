@@ -14,26 +14,22 @@
     drawer.style.pointerEvents = 'none';
   }
 
-  function forceLottieFix() {
-  requestAnimationFrame(() => {
-    if (lottiePlayer) {
-      lottiePlayer.style.transform = 'translateZ(0)';
-    }
-  });
-}
 
   function initLottie() {
-    if (!lottiePlayer) return;
+  if (!lottiePlayer) return;
 
-    forceLottieFix();
+  customElements.whenDefined('dotlottie-wc').then(() => {
 
-    const tryGetInstance = () => {
-      dotLottieInstance = lottiePlayer.dotLottie;
-      if (!dotLottieInstance) {
-        requestAnimationFrame(tryGetInstance);
-        return;
-      }
-      // Instance ready — play any animation that was requested while loading
+    const showReal = () => {
+      if (burger.classList.contains('is-ready')) return;
+
+      dotLottieInstance = lottiePlayer.dotLottie || null;
+
+      /* eerst laten renderen + extra wachttijd */
+      setTimeout(() => {
+        burger.classList.add('is-ready');
+      }, 1000); /* speel met 250-500ms */
+
       if (pendingMode) {
         const mode = pendingMode;
         pendingMode = null;
@@ -41,14 +37,19 @@
       }
     };
 
-    // Start polling immediately AND after the element type is defined
-    requestAnimationFrame(tryGetInstance);
-    if (window.customElements) {
-      window.customElements.whenDefined('dotlottie-wc').then(() => {
-        if (!dotLottieInstance) requestAnimationFrame(tryGetInstance);
-      });
-    }
-  }
+    lottiePlayer.addEventListener('ready', showReal);
+    lottiePlayer.addEventListener('load', showReal);
+
+    const check = setInterval(() => {
+      if (lottiePlayer.dotLottie) {
+        clearInterval(check);
+        showReal();
+      }
+    }, 100);
+
+    setTimeout(() => clearInterval(check), 3000);
+  });
+}
 
   function playLottie(mode) {
     // Last-chance grab before giving up
