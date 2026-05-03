@@ -3,15 +3,26 @@
   gsap.registerPlugin(ScrollTrigger);
 
   /* ── Word splitter for hero title stagger ── */
-  function wrapWords(el) {
-    const html = el.innerHTML.replace(/<br\s*\/?>/gi, ' ⏎ ');
-    const words = html.split(/\s+/);
-    el.innerHTML = words.map(w => {
-      if (w === '⏎') return '<br>';
-      return `<span class="word" style="display:inline-block;overflow:hidden;vertical-align:bottom"><span class="word-inner" style="display:inline-block">${w}</span></span> `;
-    }).join('');
-    return el.querySelectorAll('.word-inner');
-  }
+ function wrapWords(el) {
+  const nodes = [...el.childNodes];
+  let html = '';
+
+  nodes.forEach(node => {
+    if (node.nodeType === 3) {
+      const words = node.textContent.trim().split(/\s+/);
+      html += words.map(word =>
+        `<span class="word"><span class="word-inner">${word}</span></span>`
+      ).join(' ');
+    } else if (node.nodeName === 'BR') {
+      html += '<br>';
+    } else {
+      html += node.outerHTML;
+    }
+  });
+
+  el.innerHTML = html;
+  return el.querySelectorAll('.word-inner');
+}
 
   /* ── Nav entrance ── */
   gsap.from('nav:not(.drawer)', { y: -20, opacity: 0, duration: .6, ease: 'power3.out', delay: .1 });

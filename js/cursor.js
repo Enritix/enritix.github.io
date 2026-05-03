@@ -40,10 +40,12 @@
 
     const CARD = '.project-card, .related-card';
     const LINK = 'a, button, [role="button"], .filter-btn, .contact-link';
+    const TEXT = 'input, textarea, [contenteditable]';
 
     function setMode(mode) {
       document.body.classList.toggle('cur-link', mode === 'link');
       document.body.classList.toggle('cur-view', mode === 'view');
+      document.body.classList.toggle('cur-text', mode === 'text');
 
       gsap.to(dot, {
         scale: mode ? 0 : 1,
@@ -93,6 +95,7 @@
 
     function onHover(e) {
       if (e.target.closest(CARD)) setMode('view');
+      else if (e.target.closest(TEXT)) setMode('text');
       else if (e.target.closest(LINK)) setMode('link');
       else setMode('');
     }

@@ -4,14 +4,13 @@
     title: "Oxford Bikes",
     subtitle: "Brand & B2B Wholesale Shop",
     year: "2026",
-    type: "Shopify",
+    type: "WordPress / Shopify",
     accent: "#7CFF6B",
     gradient: "linear-gradient(135deg,#141a14 0%,#1f2a1f 100%)",
-    tags: ["Shopify", "Liquid", "B2B", "CSS"],
+    tags: ["WordPress", "Shopify", "Liquid", "B2B", "CSS", "Business Central"],
     images: [
-      "/assets/images/placeholder-image.png",
-      "/assets/images/placeholder-image.png",
-      "/assets/images/placeholder-image.png"
+      "/assets/images/oxford-bikes/main.png",
+      "/assets/images/oxford-bikes/category.png"
     ],
     summary: "Two interconnected Shopify experiences: brand site and B2B wholesale platform.",
     description: [
@@ -36,8 +35,9 @@
     gradient: "linear-gradient(135deg,#1a0c10 0%,#2a1418 100%)",
     tags: ["Webflow", "UI Design"],
     images: [
-      "/assets/images/placeholder-image.png",
-      "/assets/images/placeholder-image.png"
+      "/assets/images/zannata/main.png",
+      "/assets/images/zannata/product-page.png",
+      "/assets/images/zannata/store-locator.png"
     ],
     summary: "Custom Webflow business website built from scratch.",
     description: [
@@ -61,12 +61,18 @@
     gradient: "linear-gradient(135deg,#1a1408 0%,#2a1f10 100%)",
     tags: ["Express.js", "TypeScript", "Supabase", "MongoDB"],
     images: [
-      "/assets/images/placeholder-image.png",
-      "/assets/images/placeholder-image.png"
+      "/assets/images/legolads/main.png",
+      "/assets/images/legolads/landingspage.png",
+      "/assets/images/legolads/game1.png",
+      "/assets/images/legolads/game1-belt.png",
+      "/assets/images/legolads/memory-game.png",
+      "/assets/images/legolads/chest.png",
+      "/assets/images/legolads/ai-bot.png",
+      "/assets/images/legolads/settings.png",
     ],
     summary: "Full-stack application with hybrid database architecture.",
     description: [
-      "LegoLads is a full-stack web application built with Express.js and TypeScript, developed as part of an academic project. The system uses a hybrid database architecture combining Supabase (PostgreSQL) for structured relational data and MongoDB for more flexible document-based storage.",
+      "LegoLads is a full-stack web application built with Express.js and TypeScript, developed as part of an academic project. The system uses a hybrid database architecture combining Supabase (PostgreSQL) for structured relational data and MongoDB for more flexible document-based storage. It uses a custom-built authentication system with JWT tokens and role-based access control, allowing for different user types such as admins, regular users and guests.",
       "The backend exposes a RESTful API with strongly typed route handlers, middleware-based authentication, and a clear separation of concerns between services and data access layers. TypeScript is used throughout to ensure type safety from database operations to API responses.",
       "The application is deployed on Render with environment-based configuration. The frontend is rendered using EJS templates with progressive enhancement, avoiding heavy client-side frameworks while still maintaining a dynamic user experience."
     ],
@@ -86,8 +92,8 @@
     gradient: "linear-gradient(135deg,#120812 0%,#1f0f1a 100%)",
     tags: ["HTML", "CSS", "JavaScript", "SoundCloud API"],
     images: [
-      "/assets/images/placeholder-image.png",
-      "/assets/images/placeholder-image.png"
+      "/assets/images/recuedle/main.png",
+      "/assets/images/recuedle/gameplay.png"
     ],
     summary: "Daily music guessing game using SoundCloud embeds.",
     description: [
@@ -111,14 +117,16 @@
     gradient: "linear-gradient(135deg,#0f0b1a 0%,#1a1425 100%)",
     tags: ["Leaflet.js", "Webflow", "JavaScript"],
     images: [
-      "/assets/images/placeholder-image.png",
-      "/assets/images/placeholder-image.png"
+      "/assets/images/ardacraft/main.png",
+      "/assets/images/ardacraft/regions.png",
+      "/assets/images/ardacraft/paths.png",
+      "/assets/images/ardacraft/measure.png"
     ],
     summary: "Interactive Minecraft world map using custom tiles.",
     description: [
       "ArdaCraft is a large-scale Minecraft project recreating Middle-earth at a 1:58 scale. This interactive map was built to allow players and visitors to explore the world visually and navigate between key locations.",
-      "The system is built using Leaflet.js embedded within a Webflow environment, with custom tile layers generated from in-game map renders. The map includes hundreds of categorized points of interest such as cities, fortresses, rivers and roads.",
-      "JavaScript is used for dynamic marker filtering, custom popups, and deep-linking functionality that allows users to share exact coordinates. The tile system supports seamless zooming from continent-level views down to detailed local areas."
+      "The system is built using Leaflet.js embedded within a Webflow environment, with custom tile layers generated from in-game map renders. The map includes hundreds of categorized points of interest such as cities, fortresses and regions.",
+      "JavaScript is used for dynamic marker filtering, custom popups etc. The tile system supports seamless zooming from continent-level views down to detailed local areas."
     ],
     links: [
       { label: "Explore map", url: "https://www.ardacraft.me/map/middle-earth-interactive-map" }
@@ -136,14 +144,16 @@
     gradient: "linear-gradient(135deg,#0a0a0a 0%,#141414 100%)",
     tags: ["HTML", "CSS", "JavaScript"],
     images: [
-      "/assets/images/placeholder-image.png",
-      "/assets/images/placeholder-image.png"
+      "/assets/images/portfolio/main.png",
+      "/assets/images/portfolio/main-mobile.png",
+      "/assets/images/portfolio/projects.png",
+      "/assets/images/portfolio/project-page.png"
     ],
     summary: "Minimal hand-coded portfolio with zero dependencies.",
     description: [
       "This portfolio is a deliberately hand-coded project built without frameworks, build tools or external dependencies. The objective was to demonstrate that modern, high-quality web experiences can be achieved with minimal technology.",
       "The design follows a dark editorial aesthetic, combining typography choices such as DM Serif Display, DM Mono and DM Sans to create a clear visual hierarchy. The entire layout system is built using CSS Grid and custom properties for easy theming and scalability.",
-      "Performance was a key focus throughout development. The site uses a single HTML file, a lightweight CSS stylesheet, inline SVG assets and minimal JavaScript. Scroll-based animations are handled using IntersectionObserver to avoid relying on heavy animation libraries."
+      "Performance was a key focus throughout development. The site uses a lightweight CSS stylesheet, inline SVG assets and minimal JavaScript. Scroll-based animations are handled using GSAP to create smooth, performant effects."
     ],
     links: [
       { label: "View source", url: "https://github.com/Enritix/enritix.github.io" }
@@ -182,7 +192,7 @@
     type: "E-commerce",
     accent: "#8FB7FF",
     gradient: "linear-gradient(135deg,#0b1620 0%,#162436 100%)",
-    tags: ["Webshop", "HTML", "CSS", "JavaScript"],
+    tags: ["Shopify", "Liquid", "B2B", "CSS", "Business Central"],
     images: [
       "/assets/images/placeholder-image.png",
       "/assets/images/placeholder-image.png"
@@ -193,7 +203,9 @@
       "The system is designed around clear categorization and intuitive navigation, allowing users to quickly browse through large sets of products.",
       "The main goal of the project was to optimize clarity, speed and usability in a catalog-heavy environment."
     ],
-    links: [],
+    links: [
+      { label: "shop.vdbparts.be", url: "https://shop.vdbparts.be" }
+    ],
     featured: false
   },
 
@@ -205,7 +217,7 @@
     type: "Web Platform",
     accent: "#6F7CFF",
     gradient: "linear-gradient(135deg,#0b1020 0%,#151c2f 100%)",
-    tags: ["HTML", "CSS", "JavaScript"],
+    tags: ["Express.js", "TypeScript", "MongoDB", "Web Design"],
     images: [
       "/assets/images/placeholder-image.png",
       "/assets/images/placeholder-image.png"
@@ -213,7 +225,7 @@
     summary: "Gaming website platform built for structured game content.",
     description: [
       "Vapormoon Games is a structured gaming website developed as part of an academic project.",
-      "The platform was designed to support modular content, making it scalable for future game additions and feature expansions.",
+      "The platform was designed to support modular content, making it scalable for future game additions and feature expansions. It features the ability to login and manage game content through an admin interface, allowing for easy updates and maintenance.",
       "A responsive navigation system and structured layout ensure usability across different screen sizes while maintaining a consistent visual hierarchy."
     ],
     links: [],

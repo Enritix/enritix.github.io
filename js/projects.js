@@ -40,18 +40,23 @@ function buildCard(p) {
     p.image ||
     (p.images && p.images.length ? p.images[0] : '');
 
+    
+      // <div class="project-title">${p.title}</div> stond boven description, maar dat is al in de overlay dus dubbelop. Daarom eruit gehaald.
+      // <span class="project-img-title" style="color:${p.accent}">${p.title}</span> accent kleur weggehaald
+
   card.innerHTML = `
     <div class="project-img">
-      ${
-        imgSrc
-          ? `
-        <img src="${imgSrc}" alt="${p.title}" class="project-card-image">
-        <div class="project-img-overlay"></div>
-      `
-          : `
-        <div class="project-img-overlay fallback"></div>
-      `
-      }
+      <div class="project-img-zoom">
+        ${imgSrc
+          ? `<img src="${imgSrc}" alt="${p.title}" class="project-card-image">
+             <div class="project-img-overlay"></div>`
+          : `<div class="project-img-overlay fallback" style="background:${p.gradient}"></div>`
+        }
+      </div>
+      <div class="project-img-content">
+        <span class="project-img-title">${p.title}</span>
+        <span class="project-img-type">${p.type}</span>
+      </div>
     </div>
 
     <div class="project-body">
@@ -60,7 +65,6 @@ function buildCard(p) {
         <span class="project-year">${p.year}</span>
       </div>
 
-      <div class="project-title">${p.title}</div>
       <div class="project-desc">${p.summary}</div>
 
       <button class="project-link" data-id="${p.id}">View project →</button>
@@ -68,11 +72,11 @@ function buildCard(p) {
   `;
 
   card.addEventListener('mouseenter', () =>
-    gsap.to(card, { y: -5, scale: 1.01, duration: .22, ease: 'power2.out' })
+    gsap.to(card, { y: -5, duration: .22, ease: 'power2.out' })
   );
 
   card.addEventListener('mouseleave', () =>
-    gsap.to(card, { y: 0, scale: 1, duration: .28, ease: 'power2.inOut' })
+    gsap.to(card, { y: 0, duration: .28, ease: 'power2.inOut' })
   );
 
   card.addEventListener('click', () => navigate(p.id));
